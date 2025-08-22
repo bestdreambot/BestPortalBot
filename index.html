@@ -18,25 +18,30 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      text-align: center;
     }
     #logo {
       width: 200px;
+    }
+    h1, p {
+      color: #000; /* спрятали текст — он черный на черном фоне */
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <img id="logo" src="img/BestPortal.jpg" alt="BestPortal">
+    <h1>Добро пожаловать в BestPortal!</h1>
+    <p>Контент вашего приложения</p>
   </div>
 
   <script>
     const tg = Telegram.WebApp;
-    const DEBUG = true; // поставь false, чтобы скрыть логи
+    const DEBUG = false; // Поставь true, если нужны логи в консоли
 
     tg.ready();
     tg.expand();
 
-    // адаптируем высоту
     const applyHeight = () => {
       document.documentElement.style.setProperty('--app-height', tg.viewportHeight + 'px');
     };
