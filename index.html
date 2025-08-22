@@ -1,68 +1,63 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>BestPortal — мини-приложение</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body {
-            background-color: #000;
-            margin: 0;
-            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-            color: white;
-            font-family: Arial, sans-serif;
-            height: 100vh;
-            box-sizing: border-box;
-        }
-        .container {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        img {
-            max-width: 100%;
-            max-height: 200px;
-            object-fit: contain;
-            margin-bottom: 20px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>BestPortal – мини-приложение</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    :root { --app-height: 100vh; }
+    html, body {
+      height: var(--app-height);
+      margin: 0;
+      background: #000;
+    }
+    .wrap {
+      height: var(--app-height);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #logo {
+      max-width: 100%;
+      max-height: 100%;
+      cursor: pointer;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <img src="img/BestPortal.jpg" alt="BestPortal">
-        <h1>Добро пожаловать в BestPortal!</h1>
-        <p>Контент вашего приложения</p>
-    </div>
+  <div class="wrap">
+    <img id="logo" src="img/BestPortal.jpg" alt="BestPortal">
+  </div>
 
-    <script>
-        // Инициализация Telegram WebApp
-        const tg = Telegram.WebApp;
-        
-        // Сообщаем Telegram, что приложение готово
-        tg.ready();
-        
-        // Включаем подтверждение закрытия и разворачиваем на весь экран
-        tg.enableClosingConfirmation();
-        tg.expand();
-        
-        // Устанавливаем цвета
-        tg.setHeaderColor('secondary_bg_color');
-        tg.setBackgroundColor('#000000');
-        
-        // Для отладки
-        console.log("Platform:", tg.platform);
-        console.log("Viewport height:", tg.viewportHeight);
-        console.log("Header color:", tg.headerColor);
-        
-        // Обработчик изменения viewport
-        tg.onEvent('viewportChanged', () => {
-            console.log("Viewport changed:", tg.viewportHeight);
-            // Здесь можно пересчитывать layout
-        });
-    </script>
+  <script>
+    const tg = Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+
+    // выставляем реальную высоту вебвью Телеграма (чтобы пропадала верхняя полоса)
+    const applyHeight = () => {
+      document.documentElement.style.setProperty('--app-height', tg.viewportHeight + 'px');
+    };
+    applyHeight();
+    tg.onEvent('viewportChanged', applyHeight);
+
+    // клик по кругу — скрываем
+    const logo = document.getElementById('logo');
+    const hide = () => logo.classList.add('hidden');
+    logo.addEventListener('click', hide);
+    logo.addEventListener('touchend', hide);
+
+    // === Диагностика ===
+    console.log('=== CHECK ===');
+    console.log('Платформа:', tg.platform);
+    console.log('Версия:', tg.version);
+    console.log('Есть пользователь?:', !!tg.initDataUnsafe.user);
+    console.log('Развернуто?:', tg.isExpanded);
+    console.log('Высота окна:', tg.viewportHeight);
+  </script>
 </body>
 </html>
