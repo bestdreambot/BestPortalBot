@@ -1,19 +1,28 @@
 <!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>BestPortal</title>
   <style>
-    html,body{height:100%;margin:0;background:#000}
-    body{display:grid;place-items:center;overscroll-behavior:none;touch-action:manipulation}
-    img{width:100vw;height:100vh;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none}
+    html,body{margin:0;height:100%;background:#000;overscroll-behavior:none}
+    body{display:grid;place-items:center;min-height:100dvh;touch-action:manipulation}
+    #logo{width:100%;height:100%;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none}
   </style>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-  <!-- абсолютный путь к файлу внутри Pages-сайта -->
-  <img src="/BestPortalBot/ing/BestPortal.jpg?v=1001" alt="">
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script>try{Telegram.WebApp.ready();Telegram.WebApp.expand();}catch(e){}</script>
+  <img id="logo" src="./ing/BestPortal.jpg" alt="BestPortal" />
+  <script>
+    const tg = window.Telegram?.WebApp;
+    if (tg){
+      tg.ready();          // говорим Telegram: «приложение загружено»
+      tg.expand();         // максимально растянуть
+      try {
+        tg.setBackgroundColor("#000000");
+        tg.setHeaderColor("secondary_bg_color");
+      } catch(e){}
+    }
+  </script>
 </body>
 </html>
