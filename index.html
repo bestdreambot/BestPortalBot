@@ -1,25 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>BestPortal</title>
   <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background-color: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    img {
-      max-width: 90%;
-      max-height: 90%;
-    }
+    html,body{height:100%;margin:0;background:#000}
+    body{display:grid;place-items:center}
+    img{max-width:92vmin;max-height:92vmin;display:block}
   </style>
 </head>
 <body>
-  <img src="ing/BestPortal.jpg" alt="BestPortal Logo">
+  <img id="logo"
+       src="https://bestdreambot.github.io/BestPortalBot/ing/BestPortal.jpg?v=1"
+       alt="BestPortal" referrerpolicy="no-referrer" crossorigin="anonymous"
+       onerror="this.onerror=null;this.src='https://bestdreambot.github.io/BestPortalBot/ing/BestPortal.jpeg?v=1'">
+  <script>
+    // принудительно сбиваем кеш Telegram: меняем v при каждом деплое
+  </script>
 </body>
 </html>
