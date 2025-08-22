@@ -15,49 +15,49 @@
     .wrap {
       height: var(--app-height);
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      text-align: center;
     }
     #logo {
-      max-width: 100%;
-      max-height: 100%;
-      cursor: pointer;
-    }
-    .hidden {
-      display: none;
+      width: 200px;
+      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <img id="logo" src="img/BestPortal.jpg" alt="BestPortal">
+    <h1>Добро пожаловать в BestPortal!</h1>
+    <p>Контент вашего приложения</p>
   </div>
 
   <script>
     const tg = Telegram.WebApp;
+    const DEBUG = true; // включи false, чтобы полностью убрать тестовые логи
+
     tg.ready();
     tg.expand();
 
-    // выставляем реальную высоту вебвью Телеграма (чтобы пропадала верхняя полоса)
+    // адаптируем высоту
     const applyHeight = () => {
       document.documentElement.style.setProperty('--app-height', tg.viewportHeight + 'px');
     };
     applyHeight();
     tg.onEvent('viewportChanged', applyHeight);
 
-    // клик по кругу — скрываем
-    const logo = document.getElementById('logo');
-    const hide = () => logo.classList.add('hidden');
-    logo.addEventListener('click', hide);
-    logo.addEventListener('touchend', hide);
-
-    // === Диагностика ===
-    console.log('=== CHECK ===');
-    console.log('Платформа:', tg.platform);
-    console.log('Версия:', tg.version);
-    console.log('Есть пользователь?:', !!tg.initDataUnsafe.user);
-    console.log('Развернуто?:', tg.isExpanded);
-    console.log('Высота окна:', tg.viewportHeight);
+    // только в консоль
+    if (DEBUG) {
+      console.log('=== DIAGNOSTICS ===');
+      console.log('Platform:', tg.platform);
+      console.log('Version:', tg.version);
+      console.log('User exists:', !!tg.initDataUnsafe.user);
+      console.log('Is expanded:', tg.isExpanded);
+      console.log('Viewport height:', tg.viewportHeight);
+    }
   </script>
 </body>
 </html>
