@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <title>BestPortal – мини‑приложение</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
-    :root { --app-height: 100vh; }
-    html,body{height:var(--app-height);margin:0;background:#000;}
-    .wrap{height:var(--app-height);display:flex;justify-content:center;align-items:center;}
-    #logo{max-width:100%;max-height:100%;cursor:pointer}
-    .hidden{display:none}
+    :root{ --vh:100dvh; }                      /* фолбэк для старых WebView */
+    html,body{ height:var(--vh); margin:0; background:#000; }
+    .wrap{ height:100%; display:flex; justify-content:center; align-items:center; }
+    #logo{ max-width:100%; max-height:100%; cursor:pointer; }
+    .hidden{ display:none; }
+    @supports (height:100dvh){
+      html,body{ height:100dvh; }              /* если поддерживается — используем 100dvh */
+    }
   </style>
 </head>
 <body>
@@ -20,17 +24,36 @@
 
   <script>
     const tg = window.Telegram.WebApp;
-    tg.ready();
-    tg.expand();
 
-    // выставляем реальную высоту вебвью Телеграма (чтобы пропадала верхняя полоса)
+    // применяем реальную высоту webview
     const applyHeight = () => {
-      document.documentElement.style.setProperty('--app-height', tg.viewportHeight + 'px');
+      document.documentElement.style.setProperty('--vh', tg.viewportHeight + 'px');
     };
-    applyHeight();
-    tg.onEvent('viewportChanged', applyHeight);
 
-    // клик по кругу — скрываем
+    // разворачиваем webapp
+    const expandNow = () => {
+      tg.ready();
+      tg.expand();
+      applyHeight();
+    };
+
+    // запуск как можно раньше
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', expandNow, {once:true});
+    } else {
+      expandNow();
+    }
+
+    // повторный экспанд после изменения вьюпорта (iOS)
+    tg.onEvent('viewportChanged', () => {
+      applyHeight();
+      if (!tg.isExpanded) tg.expand();
+    });
+
+    // маленький таймаут-фолбэк для упрямых клиентов
+    setTimeout(() => { if (!tg.isExpanded) tg.expand(); }, 300);
+
+    // клик по логотипу — скрыть
     const logo = document.getElementById('logo');
     const hide = () => logo.classList.add('hidden');
     logo.addEventListener('click', hide);
