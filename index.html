@@ -1,28 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>BestPortal</title>
-  <style>
-    html,body{margin:0;height:100%;background:#000;overscroll-behavior:none}
-    body{display:grid;place-items:center;min-height:100dvh;touch-action:manipulation}
-    #logo{width:100%;height:100%;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none}
-  </style>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <meta charset="UTF-8">
+    <title>BestPortal — мини-приложение</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            background-color: #000;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+    </style>
 </head>
 <body>
-  <img id="logo" src="./ing/BestPortal.jpg" alt="BestPortal" />
-  <script>
-    const tg = window.Telegram?.WebApp;
-    if (tg){
-      tg.ready();          // говорим Telegram: «приложение загружено»
-      tg.expand();         // максимально растянуть
-      try {
-        tg.setBackgroundColor("#000000");
-        tg.setHeaderColor("secondary_bg_color");
-      } catch(e){}
-    }
-  </script>
+    <img src="ing/BestPortal.jpg" alt="BestPortal">
+
+    <script>
+        // Сообщаем Telegram, что приложение готово
+        Telegram.WebApp.ready();
+
+        // Разворачиваем на весь экран
+        Telegram.WebApp.expand();
+
+        // Для отладки (можно убрать позже)
+        console.log("Telegram Mini App запущен. WebApp.ready() и expand() выполнены.");
+    </script>
 </body>
 </html>
