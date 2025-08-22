@@ -1,0 +1,13 @@
+<!doctype html><html lang="ru"><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>BestPortal</title>
+<style>html,body{height:100%;margin:0;background:#000}body{display:grid;place-items:center}
+#ring{width:min(78vmin,440px);aspect-ratio:1/1;object-fit:contain;display:block}</style></head>
+<body>
+  <img id="ring" src="./ring.jpeg" alt="" decoding="async"/>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script>
+    const tg = window.Telegram?.WebApp; tg?.ready();
+    const sp = tg?.initDataUnsafe?.start_param; if (sp==="diag") location.replace("./diag.html");
+  </script>
+</body></html>
