@@ -23,41 +23,35 @@
   </div>
 
   <script>
-    const tg = window.Telegram.WebApp;
+    <script>
+  const tg = window.Telegram.WebApp;
 
-    // применяем реальную высоту webview
-    const applyHeight = () => {
-      document.documentElement.style.setProperty('--vh', tg.viewportHeight + 'px');
-    };
+  // 1) инициализация и разворачивание
+  tg.ready();
+  tg.expand();
 
-    // разворачиваем webapp
-    const expandNow = () => {
-      tg.ready();
-      tg.expand();
-      applyHeight();
-    };
+  // 2) подгоняем высоту webview (чтобы шапка быстрее схлопнулась)
+  const applyHeight = () => {
+    document.documentElement.style.setProperty('--app-height', tg.viewportHeight + 'px');
+    if (!tg.isExpanded) tg.expand();
+  };
+  applyHeight();
+  tg.onEvent('viewportChanged', applyHeight);
 
-    // запуск как можно раньше
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', expandNow, {once:true});
-    } else {
-      expandNow();
-    }
+  // 3) настройка фона/хедера (визуально сглаживает «компакт»)
+  tg.setBackgroundColor('#000000');
+  tg.setHeaderColor('secondary_bg_color');
 
-    // повторный экспанд после изменения вьюпорта (iOS)
-    tg.onEvent('viewportChanged', () => {
-      applyHeight();
-      if (!tg.isExpanded) tg.expand();
-    });
-
-    // маленький таймаут-фолбэк для упрямых клиентов
-    setTimeout(() => { if (!tg.isExpanded) tg.expand(); }, 300);
-
-    // клик по логотипу — скрыть
-    const logo = document.getElementById('logo');
-    const hide = () => logo.classList.add('hidden');
-    logo.addEventListener('click', hide);
-    logo.addEventListener('touchend', hide);
+  // 4) клик по логотипу: скрываем контент и повторно триггерим expand
+  const logo = document.getElementById('logo');
+  const hide = () => {
+    document.body.style.backgroundColor = '#000000';
+    logo.style.display = 'none';
+    if (!tg.isExpanded) tg.expand();
+  };
+  logo.addEventListener('click', hide);
+  logo.addEventListener('touchend', hide);
+</script>
   </script>
 </body>
 </html>
