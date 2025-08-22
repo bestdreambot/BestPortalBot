@@ -1,40 +1,24 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>BestPortal — мини-приложение</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <style>
-        body {
-            background-color: #000;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-        }
-        img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BestPortal — мини‑приложение</title>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    html, body { height: 100%; margin: 0; background:#000; }
+    .wrap { height: 100%; display:flex; align-items:center; justify-content:center; }
+    img { max-width:100%; max-height:100%; object-fit:contain; display:block; }
+  </style>
 </head>
 <body>
-    <img src="ing/BestPortal.jpg" alt="BestPortal">
-
-    <script>
-        // Сообщаем Telegram, что приложение готово
-        Telegram.WebApp.ready();
-
-        // Разворачиваем на весь экран
-        Telegram.WebApp.expand();
-
-        // Для отладки (можно убрать позже)
-        console.log("Telegram Mini App запущен. WebApp.ready() и expand() выполнены.");
-    </script>
+  <div class="wrap">
+    <img src="img/BestPortal.jpg" alt="BestPortal" />
+  </div>
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
+  </script>
 </body>
 </html>
