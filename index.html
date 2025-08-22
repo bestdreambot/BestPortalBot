@@ -2,26 +2,53 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BestPortal — мини‑приложение</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BestPortal – мини-приложение</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
-    html,body{height:100%;margin:0;background:#000;}
-    .wrap{height:100%;display:flex;align-items:center;justify-content:center;}
-    #logo{max-width:100%;max-height:100%;object-fit:contain;display:block;cursor:pointer;-webkit-user-select:none;user-select:none;touch-action:manipulation;}
-    .hidden{display:none;}
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #000;
+    }
+    .wrap {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #logo {
+      max-width: 100%;
+      max-height: 100%;
+      cursor: pointer;
+    }
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <img id="logo" src="img/BestPortal.jpg" alt="BestPortal">
+    <img id="logo" src="img/BestPortal.jpg" alt="BestPortal" />
   </div>
+
   <script>
-    const tg = window.Telegram.WebApp; tg.ready(); tg.expand();
-    const logo = document.getElementById('logo');
-    const hide = () => logo.classList.add('hidden');
-    logo.addEventListener('click', hide, {passive:true});
-    logo.addEventListener('touchend', hide, {passive:true});
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const logo = document.getElementById("logo");
+
+      const hide = () => {
+        logo.classList.add("hidden");
+      };
+
+      // Клик мышкой
+      logo.addEventListener("click", hide);
+
+      // Тач на телефоне
+      logo.addEventListener("touchend", hide);
+    });
   </script>
 </body>
 </html>
