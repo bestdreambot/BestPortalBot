@@ -1,34 +1,25 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>BestPortal</title>
   <style>
-    :root { /* высота области под шапкой Телеграма */
-      --vh: var(--tg-viewport-height, 100dvh);
-    }
-    html,body{
-      margin:0; padding:0; background:#000; height:var(--vh); width:100vw; overflow:hidden;
-      touch-action:manipulation; overscroll-behavior:none;
-    }
-    #wrap{height:var(--vh); width:100vw;}
-    #hero{
-      display:block; height:100%; width:100vw;
-      object-fit:contain; /* вся картинка целиком, с чёрными полями где нужно */
-      user-select:none; -webkit-user-drag:none; background:#000;
-    }
+    html,body{margin:0;height:100%;background:#000}
+    /* Вариант А: показать картинку целиком без обрезки (рекомендую) */
+    .splash{position:fixed;inset:0;background:#000 center/contain no-repeat url("ing/BestPortal.jpg")}
+    /* Вариант B (если нужно во всю кромку — но может обрезать): замените contain на cover */
+    /* .splash{position:fixed;inset:0;background:#000 center/cover no-repeat url("ing/BestPortal.jpg")} */
   </style>
 </head>
 <body>
-  <div id="wrap">
-    <img id="hero" src="img/BestPortal.jpg" alt="BestPortal">
-  </div>
+  <div class="splash" role="img" aria-label="BestPortal"></div>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
-    const tg = window.Telegram?.WebApp;
-    if (tg) { tg.ready(); tg.expand(); } // максимум доступной высоты
+    const tg = window.Telegram.WebApp;
+    tg.ready();   // говорим Telegram, что WebApp загружен
+    tg.expand();  // просим полноэкранный режим (убирает верхнюю шапку)
   </script>
 </body>
 </html>
