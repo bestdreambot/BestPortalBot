@@ -18,26 +18,20 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      color: white;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-      text-align: center;
     }
     #logo {
       width: 200px;
-      margin-bottom: 20px;
     }
   </style>
 </head>
 <body>
   <div class="wrap">
     <img id="logo" src="img/BestPortal.jpg" alt="BestPortal">
-    <h1>Добро пожаловать в BestPortal!</h1>
-    <p>Контент вашего приложения</p>
   </div>
 
   <script>
     const tg = Telegram.WebApp;
-    const DEBUG = true; // включи false, чтобы полностью убрать тестовые логи
+    const DEBUG = true; // поставь false, чтобы скрыть логи
 
     tg.ready();
     tg.expand();
@@ -49,7 +43,6 @@
     applyHeight();
     tg.onEvent('viewportChanged', applyHeight);
 
-    // только в консоль
     if (DEBUG) {
       console.log('=== DIAGNOSTICS ===');
       console.log('Platform:', tg.platform);
