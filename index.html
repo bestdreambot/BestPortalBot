@@ -1,25 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>BestPortal</title>
   <style>
-    html,body{margin:0;height:100%;background:#000}
-    /* Вариант А: показать картинку целиком без обрезки (рекомендую) */
-    .splash{position:fixed;inset:0;background:#000 center/contain no-repeat url("ing/BestPortal.jpg")}
-    /* Вариант B (если нужно во всю кромку — но может обрезать): замените contain на cover */
-    /* .splash{position:fixed;inset:0;background:#000 center/cover no-repeat url("ing/BestPortal.jpg")} */
+    html,body{height:100%;margin:0;background:#000}
+    body{display:grid;place-items:center;overscroll-behavior:none;touch-action:manipulation}
+    img{width:100vw;height:100vh;object-fit:contain;display:block;user-select:none;-webkit-user-drag:none}
   </style>
 </head>
 <body>
-  <div class="splash" role="img" aria-label="BestPortal"></div>
-
+  <img src="ing/BestPortal.jpg?v=3" alt="">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
-    const tg = window.Telegram.WebApp;
-    tg.ready();   // говорим Telegram, что WebApp загружен
-    tg.expand();  // просим полноэкранный режим (убирает верхнюю шапку)
+    try{Telegram.WebApp.ready();Telegram.WebApp.expand();}catch(e){}
   </script>
 </body>
 </html>
