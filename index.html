@@ -1,27 +1,26 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; script-src 'self'; style-src 'self' 'unsafe-inline'">
   <title>BestPortal</title>
   <style>
-    body {
-      margin: 0;
-      background: black;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    img {
-      width: 90%;
-      max-width: 600px;
-      height: auto;
-      display: block;
-    }
+    html,body{height:100%;margin:0;background:#000}
+    body{display:grid;place-items:center}
+    img{width:min(92vmin,680px);height:auto;display:block}
   </style>
 </head>
 <body>
-  <img src="./ing/BestPortal.jpg" alt="BestPortal">
+  <img id="hero"
+       src="/BestPortalBot/ing/BestPortal.jpg?v=1"
+       alt="BestPortal">
+  <script>
+    // если не загрузилось — пробуем кольцо
+    const img = document.getElementById('hero');
+    img.addEventListener('error', () => {
+      img.src = '/BestPortalBot/ing/ring.jpeg?v=1';
+    });
+  </script>
 </body>
 </html>
