@@ -1,26 +1,34 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https: data:; script-src 'self'; style-src 'self' 'unsafe-inline'">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>BestPortal</title>
   <style>
-    html,body{height:100%;margin:0;background:#000}
-    body{display:grid;place-items:center}
-    img{width:min(92vmin,680px);height:auto;display:block}
+    :root { /* высота области под шапкой Телеграма */
+      --vh: var(--tg-viewport-height, 100dvh);
+    }
+    html,body{
+      margin:0; padding:0; background:#000; height:var(--vh); width:100vw; overflow:hidden;
+      touch-action:manipulation; overscroll-behavior:none;
+    }
+    #wrap{height:var(--vh); width:100vw;}
+    #hero{
+      display:block; height:100%; width:100vw;
+      object-fit:contain; /* вся картинка целиком, с чёрными полями где нужно */
+      user-select:none; -webkit-user-drag:none; background:#000;
+    }
   </style>
 </head>
 <body>
-  <img id="hero"
-       src="/BestPortalBot/ing/BestPortal.jpg?v=1"
-       alt="BestPortal">
+  <div id="wrap">
+    <img id="hero" src="img/BestPortal.jpg" alt="BestPortal">
+  </div>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
-    // если не загрузилось — пробуем кольцо
-    const img = document.getElementById('hero');
-    img.addEventListener('error', () => {
-      img.src = '/BestPortalBot/ing/ring.jpeg?v=1';
-    });
+    const tg = window.Telegram?.WebApp;
+    if (tg) { tg.ready(); tg.expand(); } // максимум доступной высоты
   </script>
 </body>
 </html>
