@@ -2,84 +2,108 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Best Portal</title>
   <style>
+    /* Сброс стилей и полноэкранный режим */
     html, body {
       margin: 0;
       padding: 0;
+      width: 100%;
       height: 100%;
       background: #000;
       overflow: hidden;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
     }
+    
+    /* Стили для экранов */
     .screen {
       display: none;
       width: 100%;
       height: 100%;
       justify-content: center;
       align-items: center;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
+    
     .screen.active {
       display: flex;
     }
+    
+    /* Стиль для лого */
     #logo {
       max-width: 92vw;
       max-height: 92vh;
       cursor: pointer;
-      display: block;
     }
+    
+    /* Стиль для экрана портала */
     #portal {
       color: #fff;
-      font: 18px system-ui, sans-serif;
+      font-family: system-ui, sans-serif;
+      font-size: 24px;
+      text-align: center;
     }
-    #debug {
-      position: fixed;
-      bottom: 8px;
-      left: 8px;
-      font: 12px monospace;
-      color: #888;
+    
+    /* Скрываем стандартную верхнюю панель Telegram */
+    .tg-head {
+      display: none !important;
     }
   </style>
 </head>
 <body>
-  <!-- Первый экран с логотипом -->
   <div id="logo-screen" class="screen active">
-    <img id="logo" src="https://bestdreambot.github.io/BestPortalBot/img/BestPortal.jpg?v=1010" alt="Best Portal">
+    <img id="logo" src="img/logo.png?v=2" alt="Best Portal" onerror="this.src='img/bestportal.jpeg?v=2'">
   </div>
-
-  <!-- Второй экран -->
+  
   <div id="portal" class="screen">
     <p>Вход в портал…</p>
   </div>
 
-  <div id="debug"></div>
-
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
     (function() {
-      const dbg = msg => document.getElementById('debug').textContent = msg || '';
-
-      const logo = document.getElementById('logo');
-      const s1 = document.getElementById('logo-screen');
-      const s2 = document.getElementById('portal');
-      const tg = window.Telegram?.WebApp;
-
-      // Telegram init
-      try {
-        if (tg) {
-          tg.ready();
-          tg.expand();
-          tg.setBackgroundColor('#000000');
+      // Ждем полной загрузки API Telegram
+      if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
+        const tg = Telegram.WebApp;
+        
+        // Немедленно переходим в полноэкранный режим
+        tg.expand();
+        tg.enableClosingConfirmation();
+        tg.setBackgroundColor('#000000');
+        tg.setHeaderColor('#000000');
+        
+        // Для iOS-устройств добавляем дополнительные настройки
+        if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+          document.documentElement.style.height = '100%';
+          document.body.style.height = '100%';
+          
+          // Дополнительный вызов expand для iOS
+          setTimeout(() => tg.expand(), 100);
         }
-      } catch(e) {
-        dbg('Ошибка инициализации WebApp: ' + e.message);
+        
+        // Обработчик клика по логотипу
+        document.getElementById('logo').addEventListener('click', function() {
+          document.getElementById('logo-screen').classList.remove('active');
+          document.getElementById('portal').classList.add('active');
+          
+          // Повторно активируем полноэкранный режим после клика
+          tg.expand();
+        });
+        
+        // Также активируем полноэкранный режим при полной загрузке страницы
+        window.addEventListener('load', function() {
+          tg.expand();
+        });
       }
-
-      // Клик по лого → скрываем первый экран, показываем второй
-      logo.addEventListener('click', () => {
-        s1.classList.remove('active');
-        s2.classList.add('active');
-      });
     })();
   </script>
 </body>
