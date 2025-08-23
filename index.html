@@ -16,34 +16,29 @@
 <body>
   <!-- Экран с логотипом -->
   <div id="logo-screen" class="screen active">
-    <img id="logo" src="img/bestportal.jpeg?v=7" alt="Best Portal" />
+    <img id="logo" src="img/bestportal.png?v=1" alt="Best Portal" />
   </div>
 
   <!-- Экран портала -->
-  <div id="portal" class="screen">
-    <p>Вход в портал…</p>
-  </div>
+  <div id="portal" class="screen"><p>Вход в портал…</p></div>
 
+  <!-- Блок для отладки -->
   <div id="debug"></div>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
     (function(){
-      const dbg=(m)=>{document.getElementById('debug').textContent=m||'';}
+      const dbg=m=>{document.getElementById('debug').textContent=m||''}
       const logo=document.getElementById('logo');
       const s1=document.getElementById('logo-screen');
       const s2=document.getElementById('portal');
       const tg=window.Telegram?.WebApp;
 
-      logo.addEventListener('error',()=>dbg('Картинка не найдена: img/bestportal.jpeg'));
+      logo.addEventListener('error',()=>dbg('Ошибка: img/bestportal.png?v=1 не найден'));
+      logo.addEventListener('load',()=>dbg(''));
 
-      if(tg){ try{ tg.ready(); tg.expand(); tg.setBackgroundColor('#000000'); }catch(e){ dbg('WebApp init error'); } }
-
-      logo.addEventListener('click',()=>{
-        s1.classList.remove('active');
-        s2.classList.add('active');
-        dbg('');
-      });
+      if(tg){try{tg.ready();tg.expand();tg.setBackgroundColor('#000000')}catch(e){dbg('WebApp init error')}}
+      logo.addEventListener('click',()=>{s1.classList.remove('active');s2.classList.add('active');dbg('')});
     })();
   </script>
 </body>
