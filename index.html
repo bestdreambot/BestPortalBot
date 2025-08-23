@@ -1,61 +1,66 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <title>BestPortal – мини-приложение</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta charset="utf-8" />
+  <title>BestPortal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
-    :root { --app-height: 100vh; }
-    html, body {
-      height: var(--app-height);
-      margin: 0;
-      background: #000;
-    }
-    .wrap {
-      height: var(--app-height);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-    }
-    #logo {
-      width: 200px;
-    }
-    h1, p {
-      color: #000; /* спрятали текст — он черный на черном фоне */
-    }
+    :root { color-scheme: dark; }
+    html,body { margin:0; height:100%; background:#000; }
+    .screen { height:100%; display:flex; align-items:center; justify-content:center; }
+    .hidden { display:none; }
+    .logo { width:min(88vw, 360px); height:min(88vw, 360px); object-fit:contain; }
+    .btn { position:fixed; bottom:28px; left:50%; transform:translateX(-50%);
+           padding:12px 18px; border:1px solid #555; border-radius:12px; background:#000; color:#fff; font:600 16px/1.2 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto; }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <img id="logo" src="img/BestPortal.jpg" alt="BestPortal">
-    <h1>Добро пожаловать в BestPortal!</h1>
-    <p>Контент вашего приложения</p>
+  <!-- Экран 1: логотип + автоскрытая шапка -->
+  <div id="intro" class="screen">
+    <div>
+      <img class="logo" src="./img/BestPortal.jpg" alt="BestPortal" />
+      <button id="go" class="btn">BestPortal</button>
+    </div>
   </div>
+
+  <!-- Экран 2: чёрный, шапка видима -->
+  <div id="blank" class="screen hidden"></div>
 
   <script>
     const tg = Telegram.WebApp;
-    const DEBUG = false; // Поставь true, если нужны логи в консоли
+    const collapsedMode = localStorage.getItem('bp_collapsed') === '1';
 
-    tg.ready();
-    tg.expand();
-
-    const applyHeight = () => {
-      document.documentElement.style.setProperty('--app-height', tg.viewportHeight + 'px');
-    };
-    applyHeight();
-    tg.onEvent('viewportChanged', applyHeight);
-
-    if (DEBUG) {
-      console.log('=== DIAGNOSTICS ===');
-      console.log('Platform:', tg.platform);
-      console.log('Version:', tg.version);
-      console.log('User exists:', !!tg.initDataUnsafe.user);
-      console.log('Is expanded:', tg.isExpanded);
-      console.log('Viewport height:', tg.viewportHeight);
+    function showIntro() {
+      tg.ready();
+      tg.setHeaderColor('bg_color');      // системный цвет
+      tg.setBackgroundColor('#000000');   // фон webview
+      tg.expand();                        // скрыть шапку
+      document.getElementById('intro').classList.remove('hidden');
+      document.getElementById('blank').classList.add('hidden');
     }
+
+    function showBlankWithHeader() {
+      tg.ready();
+      tg.setHeaderColor('bg_color');
+      tg.setBackgroundColor('#000000');
+      // ВАЖНО: НЕ вызываем expand(), чтобы шапка была видна
+      document.getElementById('intro').classList.add('hidden');
+      document.getElementById('blank').classList.remove('hidden');
+    }
+
+    // Роутинг по флагу
+    if (collapsedMode) {
+      showBlankWithHeader();
+    } else {
+      showIntro();
+    }
+
+    // Кнопка “BestPortal” → включаем режим со шапкой
+    document.getElementById('go').addEventListener('click', () => {
+      localStorage.setItem('bp_collapsed', '1');
+      location.reload(); // перезапуск без expand() → шапка появляется
+    });
   </script>
 </body>
 </html>
