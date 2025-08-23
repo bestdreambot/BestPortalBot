@@ -15,8 +15,7 @@
 </head>
 <body>
   <div id="logo-screen" class="screen active">
-    <!-- используем JPEG -->
-    <img id="logo" src="/BestPortalBot/img/bestportal.jpeg?v=2" alt="Best Portal">
+    <img id="logo" alt="Best Portal">
   </div>
 
   <div id="portal" class="screen"><p>Вход в портал…</p></div>
@@ -26,15 +25,31 @@
   <script>
     (function(){
       const dbg=m=>{document.getElementById('debug').textContent=m||''}
+
+      // Абсолютная база GitHub Pages (устраняет проблему путей)
+      const BASE = 'https://bestdreambot.github.io/BestPortalBot/';
+      const candidates = [
+        BASE + 'img/bestportal.png?v=' + Date.now(),
+        BASE + 'img/bestportal.jpeg?v=' + Date.now()
+      ];
+
       const logo=document.getElementById('logo');
       const s1=document.getElementById('logo-screen');
       const s2=document.getElementById('portal');
       const tg=window.Telegram?.WebApp;
 
-      logo.addEventListener('error',()=>dbg('Ошибка: /BestPortalBot/img/bestportal.jpeg?v=2 не найден'));
-      logo.addEventListener('load',()=>dbg(''));
+      function tryLoad(queue){
+        if(!queue.length){ dbg('Лого не найдено по обоим путям'); return; }
+        const url=queue.shift();
+        logo.onload = ()=>{ dbg(''); };
+        logo.onerror= ()=>{ dbg('Ошибка загрузки: '+url); tryLoad(queue); };
+        logo.src = url;
+      }
+      tryLoad(candidates.slice()); // пробуем PNG, затем JPEG
 
-      try{ if(tg){ tg.ready(); tg.expand(); tg.setBackgroundColor('#000000'); } }catch(e){ dbg('WebApp init error'); }
+      try{
+        if(tg){ tg.ready(); tg.expand(); tg.setBackgroundColor('#000000'); }
+      }catch(e){ dbg('WebApp init error'); }
 
       logo.addEventListener('click',()=>{ s1.classList.remove('active'); s2.classList.add('active'); dbg(''); });
     })();
