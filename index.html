@@ -1,63 +1,111 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Best Portal</title>
   <style>
-    html,body{margin:0;height:100%;background:#000;overflow:hidden}
-    .screen{position:absolute;inset:0;display:none;justify-content:center;align-items:center}
-    .screen.active{display:flex}
-    #logo{max-width:92vw;max-height:92vh;cursor:pointer;display:block}
-    #portal{color:#fff;font:16px/1.4 system-ui,sans-serif}
+    /* Базовые стили для полноэкранного режима */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+    
+    /* Экран логотипа */
+    #logo-screen {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    
+    /* Стиль логотипа */
+    #logo {
+      max-width: 92vw;
+      max-height: 92vh;
+      cursor: pointer;
+    }
+    
+    /* Экран портала (изначально скрыт) */
+    #portal {
+      display: none;
+      width: 100%;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-family: system-ui, sans-serif;
+      font-size: 24px;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <div id="logo-screen" class="screen active">
-    <img id="logo" alt="">
+  <!-- Экран с логотипом -->
+  <div id="logo-screen">
+    <img id="logo" alt="Best Portal">
   </div>
-  <div id="portal" class="screen"><p>Вход в портал…</p></div>
+  
+  <!-- Экран портала -->
+  <div id="portal">
+    <p>Вход в портал…</p>
+  </div>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
-    (function(){
-      // безопасно вычисляем корень репозитория (напр., /BestPortalBot/)
-      const parts = location.pathname.split('/').filter(Boolean);
-      const ROOT = parts.length ? ('/' + parts[0] + '/') : '/BestPortalBot/';
-
-      // загружаем ТОЛЬКО один логотип; запасные пути — если переименуешь
-      const ts = Date.now();
-      const candidates = [
-        ROOT + 'img/BestPortal.jpg?v=' + ts,   // текущее имя и регистр
-        ROOT + 'img/bestportal.jpg?v=' + ts,
-        ROOT + 'img/bestportal.jpeg?v=' + ts,
-        ROOT + 'img/bestportal.png?v=' + ts
-      ];
-
-      const logo = document.getElementById('logo');
-      const sLogo = document.getElementById('logo-screen');
-      const sPortal = document.getElementById('portal');
-      const tg = window.Telegram?.WebApp;
-
-      function loadOne(list){
-        if(!list.length){ return; }
-        const url = list.shift();
-        logo.onload = null;
-        logo.onerror = ()=>loadOne(list);
-        logo.src = url;
-      }
-      loadOne(candidates);
-
-      // полноэкранный режим и чёрный фон сверху
-      try{ tg?.ready(); tg?.expand(); tg?.setBackgroundColor('#000000'); tg?.setHeaderColor('#000000'); setTimeout(()=>tg?.expand(),120); }catch(_){}
-
-      // по клику — переход ко второму экрану
-      logo.addEventListener('click', ()=>{
-        sLogo.classList.remove('active');
-        sPortal.classList.add('active');
-        tg?.expand();
-      });
-    })();
-  </script>
-</body>
-</html>
+    (function() {
+      // Функция для безопасного выполнения кода
+      function initApp() {
+        // Проверяем доступность API Telegram WebApp
+        if (typeof Telegram === 'undefined' || !Telegram.WebApp) {
+          console.error('Telegram WebApp API не доступна');
+          return;
+        }
+        
+        const tg = Telegram.WebApp;
+        const logo = document.getElementById('logo');
+        const portal = document.getElementById('portal');
+        
+        // 1. Вычисляем абсолютный путь к изображению
+        const pathParts = window.location.pathname.split('/').filter(Boolean);
+        const projectRoot = pathParts.length > 0 ? '/' + pathParts[0] + '/' : '/';
+        const absoluteRoot = projectRoot === '/' ? '/BestPortalBot/' : projectRoot;
+        const imagePath = absoluteRoot + 'img/BestPortal.jpg?v=' + Date.now();
+        
+        // 2. Устанавливаем источник изображения
+        logo.src = imagePath;
+        
+        // 3. Обработчик ошибки загрузки изображения
+        logo.onerror = function() {
+          console.error('Не удалось загрузить изображение:', imagePath);
+        };
+        
+        // 4. Инициализация Telegram WebApp
+        try {
+          tg.ready();
+          
+          // Переходим в полноэкранный режим
+          tg.expand();
+          tg.setBackgroundColor('#000000');
+          tg.setHeaderColor('#000000');
+          
+          // Для iOS-устройств дополнительная обработка
+          if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+            // Дополнительный вызов expand для iOS
+            setTimeout(() => tg.expand(), 100);
+          }
+        } catch (error) {
+          console.error('
