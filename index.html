@@ -2,108 +2,135 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Best Portal</title>
+  <title>BestPortal — Mini App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <style>
-    /* Сброс стилей и полноэкранный режим */
+    :root { --app-height: 100vh; }
+
     html, body {
       margin: 0;
       padding: 0;
-      width: 100%;
-      height: 100%;
+      height: var(--app-height);
       background: #000;
       overflow: hidden;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      touch-action: manipulation;
     }
-    
-    /* Стили для экранов */
+
     .screen {
       display: none;
       width: 100%;
       height: 100%;
-      justify-content: center;
-      align-items: center;
+      position: relative;
+    }
+    .screen.active { display: block; }
+
+    .center {
       position: absolute;
-      top: 0;
-      left: 0;
+      inset: 0;
+      display: grid;
+      place-items: center;
     }
-    
-    .screen.active {
-      display: flex;
-    }
-    
-    /* Стиль для лого */
+
     #logo {
       max-width: 92vw;
       max-height: 92vh;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none;
       cursor: pointer;
     }
-    
-    /* Стиль для экрана портала */
-    #portal {
-      color: #fff;
-      font-family: system-ui, sans-serif;
-      font-size: 24px;
-      text-align: center;
-    }
-    
-    /* Скрываем стандартную верхнюю панель Telegram */
-    .tg-head {
-      display: none !important;
-    }
+
+    .hidden { display: none !important; }
+
+    /* скрытый отладчик (оставлен на случай проблем) */
+    #debug { display:none; position:fixed; left:8px; bottom:8px; color:#7a7a7a; font:12px/1.3 monospace; }
   </style>
 </head>
 <body>
-  <div id="logo-screen" class="screen active">
-    <img id="logo" src="img/logo.png?v=2" alt="Best Portal" onerror="this.src='img/bestportal.jpeg?v=2'">
-  </div>
-  
-  <div id="portal" class="screen">
-    <p>Вход в портал…</p>
-  </div>
+  <!-- Экран логотипа -->
+  <section id="s-logo" class="screen active">
+    <div class="center">
+      <img id="logo" alt="BestPortal">
+    </div>
+  </section>
+
+  <!-- Экран портала (чёрный фон) -->
+  <section id="s-portal" class="screen">
+    <div class="center" aria-live="polite" style="color:#fff;font:16px system-ui,sans-serif">
+      Вход в портал…
+    </div>
+  </section>
+
+  <div id="debug"></div>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
-    (function() {
-      // Ждем полной загрузки API Telegram
-      if (typeof Telegram !== 'undefined' && Telegram.WebApp) {
-        const tg = Telegram.WebApp;
-        
-        // Немедленно переходим в полноэкранный режим
-        tg.expand();
-        tg.enableClosingConfirmation();
-        tg.setBackgroundColor('#000000');
-        tg.setHeaderColor('#000000');
-        
-        // Для iOS-устройств добавляем дополнительные настройки
-        if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
-          document.documentElement.style.height = '100%';
-          document.body.style.height = '100%';
-          
-          // Дополнительный вызов expand для iOS
-          setTimeout(() => tg.expand(), 100);
-        }
-        
-        // Обработчик клика по логотипу
-        document.getElementById('logo').addEventListener('click', function() {
-          document.getElementById('logo-screen').classList.remove('active');
-          document.getElementById('portal').classList.add('active');
-          
-          // Повторно активируем полноэкранный режим после клика
-          tg.expand();
-        });
-        
-        // Также активируем полноэкранный режим при полной загрузке страницы
-        window.addEventListener('load', function() {
-          tg.expand();
-        });
+    (function () {
+      const dbgEl = document.getElementById('debug');
+      const dbg = (m) => { dbgEl.textContent = m || ''; };
+
+      // ----- Telegram API -----
+      const tg = window.Telegram && Telegram.WebApp ? Telegram.WebApp : null;
+
+      function applyHeight() {
+        const h = tg && tg.viewportHeight ? tg.viewportHeight : window.innerHeight;
+        document.documentElement.style.setProperty('--app-height', h + 'px');
       }
+
+      try {
+        if (tg) {
+          tg.ready();
+          tg.setBackgroundColor('#000000');
+          tg.setHeaderColor('bg_color');
+          tg.expand();
+          applyHeight();
+          tg.onEvent('viewportChanged', applyHeight);
+          // доп. вызов для iOS/проблемных клиентов
+          setTimeout(() => tg.expand(), 120);
+        } else {
+          applyHeight();
+          window.addEventListener('resize', applyHeight);
+        }
+      } catch (e) { /* no-op */ }
+
+      // ----- Загрузка логотипа с учётом пути и кэша -----
+      const ver = Date.now();
+      // Жёстко фиксируем корень проекта, чтобы Telegram-кэш не ломал относительные пути
+      const ROOT = '/BestPortalBot/';
+      const candidates = [
+        ROOT + 'img/logo.png?v=' + ver,
+        ROOT + 'img/bestportal.png?v=' + ver,
+        ROOT + 'img/bestportal.jpeg?v=' + ver,
+        'img/logo.png?v=' + ver,
+        'img/bestportal.png?v=' + ver,
+        'img/bestportal.jpeg?v=' + ver
+      ];
+
+      const logo = document.getElementById('logo');
+      function tryLoad(list) {
+        if (!list.length) { dbg('Лого не найдено по всем путям'); return; }
+        const url = list.shift();
+        logo.onload = () => { dbg(''); };
+        logo.onerror = () => { dbg('Ошибка загрузки: ' + url); tryLoad(list); };
+        logo.src = url;
+      }
+      tryLoad(candidates.slice());
+
+      // ----- Переход в портал (прячем картинку) -----
+      const sLogo = document.getElementById('s-logo');
+      const sPortal = document.getElementById('s-portal');
+      function enterPortal() {
+        sLogo.classList.remove('active');
+        sPortal.classList.add('active');
+        if (tg) tg.expand(); // удерживаем полноэкранный режим
+      }
+      logo.addEventListener('click', enterPortal, { passive: true });
+      logo.addEventListener('touchend', enterPortal, { passive: true });
+
+      // Дополнительно — повторно убедимся в полноэкранности после полной загрузки
+      window.addEventListener('load', () => { if (tg) tg.expand(); }, { once: true });
     })();
   </script>
 </body>
