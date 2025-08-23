@@ -5,53 +5,71 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Best Portal</title>
   <style>
-    html,body{height:100%;margin:0;background:#000;overflow:hidden}
-    .screen{display:none;width:100%;height:100%;justify-content:center;align-items:center}
-    .screen.active{display:flex}
-    #logo{max-width:92vw;max-height:92vh;cursor:pointer;display:block}
-    #portal{color:#fff;font:16px/1.4 system-ui,sans-serif}
-    #debug{position:fixed;left:8px;bottom:8px;color:#888;font:12px monospace}
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #000;
+      overflow: hidden;
+    }
+    .screen {
+      display: none;
+      width: 100%;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+    .screen.active { display: flex; }
+    #logo {
+      max-width: 92vw;
+      max-height: 92vh;
+      cursor: pointer;
+      display: block;
+    }
+    #portal {
+      color: #fff;
+      font: 16px/1.4 system-ui, sans-serif;
+    }
+    #debug {
+      position: fixed;
+      left: 8px;
+      bottom: 8px;
+      color: #888;
+      font: 12px monospace;
+    }
   </style>
 </head>
 <body>
   <div id="logo-screen" class="screen active">
-    <img id="logo" alt="Best Portal">
+    <img id="logo" src="img/BestPortal.jpg" alt="Best Portal">
   </div>
-
   <div id="portal" class="screen"><p>Вход в портал…</p></div>
   <div id="debug"></div>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
     (function(){
-      const dbg=m=>{document.getElementById('debug').textContent=m||''}
+      const dbg = m => { document.getElementById('debug').textContent = m || ''; };
 
-      // Абсолютная база GitHub Pages (устраняет проблему путей)
-      const BASE = 'https://bestdreambot.github.io/BestPortalBot/';
-      const candidates = [
-        BASE + 'img/bestportal.png?v=' + Date.now(),
-        BASE + 'img/bestportal.jpeg?v=' + Date.now()
-      ];
+      const logo = document.getElementById('logo');
+      const s1 = document.getElementById('logo-screen');
+      const s2 = document.getElementById('portal');
+      const tg = window.Telegram?.WebApp;
 
-      const logo=document.getElementById('logo');
-      const s1=document.getElementById('logo-screen');
-      const s2=document.getElementById('portal');
-      const tg=window.Telegram?.WebApp;
-
-      function tryLoad(queue){
-        if(!queue.length){ dbg('Лого не найдено по обоим путям'); return; }
-        const url=queue.shift();
-        logo.onload = ()=>{ dbg(''); };
-        logo.onerror= ()=>{ dbg('Ошибка загрузки: '+url); tryLoad(queue); };
-        logo.src = url;
+      try {
+        if (tg) {
+          tg.ready();
+          tg.expand();
+          tg.setBackgroundColor('#000000');
+        }
+      } catch (e) {
+        dbg('Ошибка WebApp init');
       }
-      tryLoad(candidates.slice()); // пробуем PNG, затем JPEG
 
-      try{
-        if(tg){ tg.ready(); tg.expand(); tg.setBackgroundColor('#000000'); }
-      }catch(e){ dbg('WebApp init error'); }
-
-      logo.addEventListener('click',()=>{ s1.classList.remove('active'); s2.classList.add('active'); dbg(''); });
+      logo.addEventListener('click', () => {
+        s1.classList.remove('active');
+        s2.classList.add('active');
+        dbg('');
+      });
     })();
   </script>
 </body>
