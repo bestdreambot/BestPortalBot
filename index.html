@@ -2,12 +2,13 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Best Portal</title>
   <style>
     html, body {
-      height: 100%;
       margin: 0;
+      padding: 0;
+      height: 100%;
       background: #000;
       overflow: hidden;
     }
@@ -18,7 +19,9 @@
       justify-content: center;
       align-items: center;
     }
-    .screen.active { display: flex; }
+    .screen.active {
+      display: flex;
+    }
     #logo {
       max-width: 92vw;
       max-height: 92vh;
@@ -27,48 +30,55 @@
     }
     #portal {
       color: #fff;
-      font: 16px/1.4 system-ui, sans-serif;
+      font: 18px system-ui, sans-serif;
     }
     #debug {
       position: fixed;
-      left: 8px;
       bottom: 8px;
-      color: #888;
+      left: 8px;
       font: 12px monospace;
+      color: #888;
     }
   </style>
 </head>
 <body>
+  <!-- Первый экран с логотипом -->
   <div id="logo-screen" class="screen active">
-    <img id="logo" src="img/BestPortal.jpg" alt="Best Portal">
+    <img id="logo" src="https://bestdreambot.github.io/BestPortalBot/img/BestPortal.jpg?v=1010" alt="Best Portal">
   </div>
-  <div id="portal" class="screen"><p>Вход в портал…</p></div>
+
+  <!-- Второй экран -->
+  <div id="portal" class="screen">
+    <p>Вход в портал…</p>
+  </div>
+
   <div id="debug"></div>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
-    (function(){
-      const dbg = m => { document.getElementById('debug').textContent = m || ''; };
+    (function() {
+      const dbg = msg => document.getElementById('debug').textContent = msg || '';
 
       const logo = document.getElementById('logo');
       const s1 = document.getElementById('logo-screen');
       const s2 = document.getElementById('portal');
       const tg = window.Telegram?.WebApp;
 
+      // Telegram init
       try {
         if (tg) {
           tg.ready();
           tg.expand();
           tg.setBackgroundColor('#000000');
         }
-      } catch (e) {
-        dbg('Ошибка WebApp init');
+      } catch(e) {
+        dbg('Ошибка инициализации WebApp: ' + e.message);
       }
 
+      // Клик по лого → скрываем первый экран, показываем второй
       logo.addEventListener('click', () => {
         s1.classList.remove('active');
         s2.classList.add('active');
-        dbg('');
       });
     })();
   </script>
