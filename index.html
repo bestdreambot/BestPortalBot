@@ -1,65 +1,60 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>BestPortal</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <meta charset="UTF-8">
+  <title>Best Portal</title>
   <style>
-    :root { color-scheme: dark; }
-    html,body { margin:0; height:100%; background:#000; }
-    .screen { height:100%; display:flex; align-items:center; justify-content:center; }
-    .hidden { display:none; }
-    .logo { width:min(88vw, 360px); height:min(88vw, 360px); object-fit:contain; }
-    .btn { position:fixed; bottom:28px; left:50%; transform:translateX(-50%);
-           padding:12px 18px; border:1px solid #555; border-radius:12px; background:#000; color:#fff; font:600 16px/1.2 -apple-system,BlinkMacSystemFont,Segoe UI,Roboto; }
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    #logo {
+      width: 100%;
+      max-width: 400px;
+      cursor: pointer;
+    }
+    #portal {
+      display: none;
+      width: 100%;
+      height: 100%;
+      background: black;
+      color: white;
+      font-size: 24px;
+      justify-content: center;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
-  <!-- Экран 1: логотип + автоскрытая шапка -->
-  <div id="intro" class="screen">
-    <div>
-      <img class="logo" src="./img/BestPortal.jpg" alt="BestPortal" />
-      <button id="go" class="btn">BestPortal</button>
-    </div>
+  <!-- Лого -->
+  <img id="logo" src="img/BestPortal.jpeg" alt="BestPortal">
+
+  <!-- Сам портал -->
+  <div id="portal">
+    Вход в портал...
   </div>
 
-  <!-- Экран 2: чёрный, шапка видима -->
-  <div id="blank" class="screen hidden"></div>
-
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
-    const tg = Telegram.WebApp;
-    const collapsedMode = localStorage.getItem('bp_collapsed') === '1';
+    const tg = window.Telegram.WebApp;
+    tg.expand(); // убрать серую полоску Telegram на старте
 
-    function showIntro() {
-      tg.ready();
-      tg.setHeaderColor('bg_color');      // системный цвет
-      tg.setBackgroundColor('#000000');   // фон webview
-      tg.expand();                        // скрыть шапку
-      document.getElementById('intro').classList.remove('hidden');
-      document.getElementById('blank').classList.add('hidden');
-    }
+    const logo = document.getElementById('logo');
+    const portal = document.getElementById('portal');
 
-    function showBlankWithHeader() {
-      tg.ready();
-      tg.setHeaderColor('bg_color');
-      tg.setBackgroundColor('#000000');
-      // ВАЖНО: НЕ вызываем expand(), чтобы шапка была видна
-      document.getElementById('intro').classList.add('hidden');
-      document.getElementById('blank').classList.remove('hidden');
-    }
-
-    // Роутинг по флагу
-    if (collapsedMode) {
-      showBlankWithHeader();
-    } else {
-      showIntro();
-    }
-
-    // Кнопка “BestPortal” → включаем режим со шапкой
-    document.getElementById('go').addEventListener('click', () => {
-      localStorage.setItem('bp_collapsed', '1');
-      location.reload(); // перезапуск без expand() → шапка появляется
+    logo.addEventListener('click', () => {
+      // Прячем логотип
+      logo.style.display = 'none';
+      // Показываем портал
+      portal.style.display = 'flex';
+      // Возвращаем верхнюю полоску Telegram
+      tg.disableVerticalSwipes?.(); // опционально
     });
   </script>
 </body>
