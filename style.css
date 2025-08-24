@@ -4,3 +4,6 @@ html,body{height:100%;margin:0;background:#000;overflow:hidden}
 #logo{max-width:92vw;max-height:92vh;cursor:pointer;display:block}
 #portal{color:#fff;font:20px/1.4 system-ui,sans-serif;text-align:center}
 #debug{position:fixed;left:8px;bottom:8px;color:#888;font:12px monospace}
+
+/* Хак: делаем текст в шапке чёрным, чтобы его не было видно */
+.telegram-web-app-header *{color:#000 !important;text-shadow:none !important}
