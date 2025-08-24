@@ -4,29 +4,30 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Best Portal</title>
-  <link rel="stylesheet" href="./style.css?v=3003" />
+  <link rel="stylesheet" href="./style.css?v=3004" />
 </head>
 <body>
-  <!-- Экран 1: логотип -->
+  <!-- Screen 1: Logo -->
   <div id="logo-screen" class="screen active">
     <img id="logo" alt="Best Portal" />
   </div>
 
-  <!-- Экран 2: анимация + маленькая Lunora -->
+  <!-- Screen 2: Animation (BestPortal.mp4) with small Lunora button -->
   <div id="anim-screen" class="screen">
-    <video id="anim" playsinline webkit-playsinline preload="auto" src="./static/anim/bestportal.mp4"></video>
-    <img id="lunoraSmall" class="thumb" alt="Lunora" />
+    <video id="anim" playsinline muted preload="metadata"></video>
+    <img id="lunora-btn" alt="Lunora" />
   </div>
 
-  <!-- Экран 3: большой экран Lunora + 2 превью-ссылки -->
+  <!-- Screen 3: Lunora full video + two side buttons -->
   <div id="portal" class="screen">
-    <video id="lunoraBig" controls playsinline webkit-playsinline preload="auto" src="./static/anim/lunora.mp4"></video>
-    <a id="noiraLink" class="pill pill-left" rel="noopener">Noira</a>
-    <a id="zaryumLink" class="pill pill-right" rel="noopener">Zaryum</a>
+    <video id="lunora-full" playsinline muted controls preload="metadata"></video>
+    <a id="noira-link" class="side-btn" target="_blank" rel="noopener noreferrer"></a>
+    <a id="zaryum-link" class="side-btn" target="_blank" rel="noopener noreferrer"></a>
   </div>
 
   <div id="debug"></div>
+
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="./script.js?v=3003"></script>
+  <script src="./script.js?v=3004"></script>
 </body>
 </html>
