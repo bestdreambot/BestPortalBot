@@ -3,32 +3,38 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>BestPortalBot</title>
-  <link rel="stylesheet" href="./style.css?v=5007" />
+  <title>Best Portal</title>
+  <link rel="stylesheet" href="./style.css?v=3" />
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
-  <!-- Шаг 1: логотип -->
-  <section id="screen-1" class="screen active">
-    <img id="logo" src="./static/img/BestPortal.jpg?v=5007" alt="" />
-  </section>
+  <!-- Шаг 1: стартовый логотип -->
+  <div id="screen-logo" class="screen active">
+    <img id="logo" src="./static/img/BestPortal.jpg" alt="BestPortal" />
+  </div>
 
-  <!-- Шаг 2: анимация + Lunora в левом верхнем углу -->
-  <section id="screen-2" class="screen">
-    <video id="introVideo" playsinline muted preload="auto">
-      <source src="./static/anim/bestportal.mp4?v=5007" type="video/mp4" />
-    </video>
-    <img id="lunora" class="badge left" src="./static/img/lunora.png?v=5007" alt="" />
-  </section>
+  <!-- Шаг 2: анимация BestPortal + маленькая иконка Lunora -->
+  <div id="screen-anim" class="screen">
+    <video id="bp-video" playsinline muted></video>
+    <button id="badge-lunora" class="badge">
+      <img src="./static/img/lunora.png" alt="Lunora" />
+    </button>
+  </div>
 
-  <!-- Шаг 3: Noira (левый верх), Zaryum (правый верх) -->
-  <section id="screen-3" class="screen">
-    <a id="noira"  class="btn-circle left"  href="https://youtube.com/playlist?list=PLuaNqEUb7SmXUdZlHeY4HgbE29TWwfTiW" target="_blank" rel="noopener"></a>
-    <a id="zaryum" class="btn-circle right" href="https://youtube.com/playlist?list=PLuaNqEUb7SmVnWfr6seNIC_8uMPZSc-Xd" target="_blank" rel="noopener"></a>
-  </section>
+  <!-- Шаг 3: анимация Lunora + две кнопки -->
+  <div id="screen-lunora" class="screen">
+    <video id="lunora-video" playsinline muted></video>
+
+    <button id="btn-noira" class="corner-btn left">
+      <img src="./static/img/Noira.jpg" alt="Noira" />
+    </button>
+
+    <button id="btn-zaryum" class="corner-btn right">
+      <img src="./static/img/Zaryum.jpg" alt="Zaryum" />
+    </button>
+  </div>
 
   <div id="debug"></div>
-
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="./script.js?v=5007"></script>
+  <script src="./script.js?v=3"></script>
 </body>
 </html>
