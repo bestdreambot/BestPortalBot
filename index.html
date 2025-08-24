@@ -1,64 +1,23 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Best Portal</title>
-  <style>
-    html,body{height:100%;margin:0;background:#000;overflow:hidden}
-    .screen{display:none;width:100%;height:100%;justify-content:center;align-items:center}
-    .screen.active{display:flex}
-    #logo{max-width:92vw;max-height:92vh;cursor:pointer;display:block}
-    #portal{color:#fff;font:20px/1.4 system-ui,sans-serif;text-align:center}
-    #debug{position:fixed;left:8px;bottom:8px;color:#888;font:12px monospace}
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Best Portal</title>
+<link rel="stylesheet" href="./style.css?v=1" />
 </head>
 <body>
   <div id="logo-screen" class="screen active">
     <img id="logo" alt="Best Portal">
   </div>
-  <div id="portal" class="screen"><p>Вход в портал…</p></div>
+
+  <div id="portal" class="screen">
+    <p>Вход в портал…</p>
+  </div>
+
   <div id="debug"></div>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script>
-    (function(){
-      const dbg = m => document.getElementById('debug').textContent = m || '';
-      const VER = new URLSearchParams(location.search).get('v') || Date.now();
-
-      // Определяем корень проекта
-      const parts = location.pathname.split('/').filter(Boolean);
-      const project = parts.length ? '/' + parts[0] + '/' : '/BestPortalBot/';
-      const ROOT = project.endsWith('/') ? project : (project + '/');
-
-      // Пути к файлу (учёт регистра имени: BestPortal.jpg)
-      const CANDIDATES = [
-        ROOT + 'img/BestPortal.jpg?v=' + VER,
-        ROOT + 'img/bestportal.jpeg?v=' + VER,
-        'https://bestdreambot.github.io/BestPortalBot/img/BestPortal.jpg?v=' + VER
-      ];
-
-      const logo = document.getElementById('logo');
-      const s1 = document.getElementById('logo-screen');
-      const s2 = document.getElementById('portal');
-      const tg = window.Telegram?.WebApp;
-
-      function tryLoad(list){
-        if(!list.length){ dbg('Лого не найдено'); return; }
-        const url = list.shift();
-        logo.onload = ()=>dbg('');
-        logo.onerror= ()=>{ dbg('Ошибка: ' + url); tryLoad(list); };
-        logo.src = url;
-        dbg('Загрузка: ' + url);
-      }
-      tryLoad(CANDIDATES.slice());
-
-      // Telegram init
-      try{ if(tg){ tg.ready(); tg.expand(); tg.setBackgroundColor('#000000'); } }catch(e){}
-
-      // Переход по клику
-      logo.addEventListener('click', ()=>{ s1.classList.remove('active'); s2.classList.add('active'); });
-    })();
-  </script>
+  <script src="./script.js?v=1"></script>
 </body>
 </html>
