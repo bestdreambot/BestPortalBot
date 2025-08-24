@@ -1,79 +1,84 @@
 (function(){
   const dbg = m => { const el = document.getElementById('debug'); if(el) el.textContent = m || ''; };
 
+  // cache-buster
   const VER = new URLSearchParams(location.search).get('v') || Date.now();
+
+  // безопасно определить корневую папку проекта на GitHub Pages
   const parts = location.pathname.split('/').filter(Boolean);
-  // проектное имя на GitHub Pages (user.github.io/<project>/...)
   const project = parts[0] || 'BestPortalBot';
   const ROOT = '/' + project + '/';
-  const img = p => ROOT + 'static/img/' + p + '?v=' + VER;
-  const anim = p => ROOT + 'static/anim/' + p + '?v=' + VER;
 
-  // элементы
-  const screenLogo = document.getElementById('logo-screen');
-  const screenAnim = document.getElementById('anim-screen');
-  const screenLunora = document.getElementById('lunora-screen');
-  const logo = document.getElementById('logo');
-  const animVideo = document.getElementById('anim');
-  const miniLunoraBtn = document.getElementById('mini-lunora');
-  const lunoraVideo = document.getElementById('lunora-video');
-  const noiraThumb = document.getElementById('noira-thumb');
-  const zaryumThumb = document.getElementById('zaryum-thumb');
-  const noiraLink = document.getElementById('noira-link');
-  const zaryumLink = document.getElementById('zaryum-link');
-
-  // ссылки на YouTube (можно заменить на реальные плейлисты)
-  const LINKS = {
-    Noira: 'https://youtube.com/playlist?list=EXAMPLE_NOIRA',
-    Zaryum: 'https://youtube.com/playlist?list=EXAMPLE_ZARYUM'
+  // Пути к ресурсам (из твоих папок static/img и static/anim)
+  const IMG = {
+    logo: ROOT + 'static/img/BestPortal.jpg?v=' + VER,
+    lunoraSmall: ROOT + 'static/img/lunora.png?v=' + VER
+  };
+  const VID = {
+    bestportal: ROOT + 'static/anim/bestportal.mp4?v=' + VER,
+    lunora: ROOT + 'static/anim/lunora.mp4?v=' + VER
   };
 
-  // Инициализация Telegram
-  try{
-    const tg = window.Telegram?.WebApp;
-    if(tg){
-      tg.ready();
-      tg.expand();
-      tg.setBackgroundColor('#000000');
-      tg.setHeaderColor?.('#000000');
-    }
-  }catch(e){}
+  // YouTube
+  const LINKS = {
+    noira: 'https://youtube.com/playlist?list=PLuaNqEUb7SmXUdZlHeY4HgbE29TWwfTiW&si=I6Ef3U8TNP1OAXu8',
+    zaryum:'https://youtube.com/playlist?list=PLuaNqEUb7SmVnWfr6seNIC_8uMPZSc-Xd&si=3A4GtV00Cx2EPmFC'
+  };
 
-  // Загрузка лого с учётом регистра и расширений
-  (function tryLoadLogo(){
-    const candidates = [img('BestPortal.jpg'), img('bestportal.jpeg'), img('bestportal.png')];
-    function next(){
-      const url = candidates.shift();
-      if(!url){ dbg('Лого не найдено'); return; }
-      logo.onload = () => dbg('');
-      logo.onerror = () => { dbg('Ошибка загрузки: ' + url); next(); };
-      logo.src = url;
-      dbg('Загрузка: ' + url);
-    }
-    next();
-  })();
+  // DOM
+  const logo = document.getElementById('logo');
+  const screenLogo = document.getElementById('logo-screen');
+  const screenAnim = document.getElementById('anim-screen');
+  const screenPortal = document.getElementById('portal');
+  const anim = document.getElementById('anim');
+  const lunoraSmall = document.getElementById('lunoraSmall');
+  const lunoraBig = document.getElementById('lunoraBig');
+  const noiraLink = document.getElementById('noiraLink');
+  const zaryumLink = document.getElementById('zaryumLink');
+  const tg = window.Telegram?.WebApp;
 
-  // Экран 1 -> Экран 2
-  logo.addEventListener('click', () => {
+  // Telegram init
+  try{ if(tg){ tg.ready(); tg.expand(); tg.setBackgroundColor('#000000'); tg.setHeaderColor('#000000'); } }catch(e){}
+
+  // Загружаем картинки без "белого квадрата": покажем, только когда onload
+  function loadImg(el, url){
+    const i = new Image();
+    i.onload = () => { el.src = url; el.classList.add('show'); };
+    i.onerror = () => { /* ignore */ };
+    i.src = url;
+  }
+
+  // Экран 1: загрузка логотипа
+  loadImg(logo, IMG.logo);
+
+  // Клик по логотипу -> Экран 2
+  logo.addEventListener('click', ()=>{
     screenLogo.classList.remove('active');
     screenAnim.classList.add('active');
-    // Запускаем анимацию и задаём мини-иконку
-    animVideo.src = anim('bestportal.mp4');
-    animVideo.play().catch(()=>{});
-    miniLunoraBtn.style.backgroundImage = 'url(' + img('lunora.png') + ')';
+
+    // Запускаем анимацию
+    anim.src = VID.bestportal;
+    anim.play().catch(()=>{});
+
+    // Дадим видео стартануть, а затем (через 600мс) плавно покажем Lunora
+    setTimeout(()=>{
+      loadImg(lunoraSmall, IMG.lunoraSmall);
+    }, 600);
   });
 
-  // Клик по мини-иконке -> Экран 3
-  miniLunoraBtn.addEventListener('click', () => {
+  // Клик по маленькой Lunora -> Экран 3 (большой видеоролик)
+  lunoraSmall.addEventListener('click', ()=>{
     screenAnim.classList.remove('active');
-    screenLunora.classList.add('active');
-    lunoraVideo.src = anim('lunora.mp4');
-    lunoraVideo.play().catch(()=>{});
-    // Боковые превью и ссылки
-    noiraThumb.src = img('Noira.jpg');
-    zaryumThumb.src = img('Zaryum.jpg');
-    noiraLink.href = LINKS.Noira;
-    zaryumLink.href = LINKS.Zaryum;
+    screenPortal.classList.add('active');
+    lunoraBig.src = VID.lunora;
+    lunoraBig.play().catch(()=>{});
   });
 
+  // Кнопки Noira / Zaryum
+  function openYT(url){
+    if(tg && typeof tg.openLink === 'function'){ tg.openLink(url); }
+    else { window.open(url, '_blank', 'noopener'); }
+  }
+  noiraLink.addEventListener('click', ()=>openYT(LINKS.noira));
+  zaryumLink.addEventListener('click', ()=>openYT(LINKS.zaryum));
 })();
