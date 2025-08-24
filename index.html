@@ -2,42 +2,31 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Best Portal</title>
-  <link rel="stylesheet" href="./style.css?v=1" />
+  <link rel="stylesheet" href="./style.css?v=3003" />
 </head>
 <body>
-  <!-- Экран 1: Логотип -->
+  <!-- Экран 1: логотип -->
   <div id="logo-screen" class="screen active">
-    <img id="logo" alt="Best Portal">
+    <img id="logo" alt="Best Portal" />
   </div>
 
-  <!-- Экран 2: Анимация + мини-иконка Lunora -->
+  <!-- Экран 2: анимация + маленькая Lunora -->
   <div id="anim-screen" class="screen">
-    <video id="anim" playsinline muted preload="auto">
-      Your browser does not support the video tag.
-    </video>
-    <button id="mini-lunora" aria-label="Open Lunora"></button>
+    <video id="anim" playsinline webkit-playsinline preload="auto" src="./static/anim/bestportal.mp4"></video>
+    <img id="lunoraSmall" class="thumb" alt="Lunora" />
   </div>
 
-  <!-- Экран 3: Lunora видео + 2 превью по бокам -->
-  <div id="lunora-screen" class="screen">
-    <video id="lunora-video" controls playsinline preload="auto">
-      Your browser does not support the video tag.
-    </video>
-    <div id="side-thumbs">
-      <a id="noira-link" target="_blank" rel="noopener noreferrer">
-        <img id="noira-thumb" alt="Noira">
-      </a>
-      <a id="zaryum-link" target="_blank" rel="noopener noreferrer">
-        <img id="zaryum-thumb" alt="Zaryum">
-      </a>
-    </div>
+  <!-- Экран 3: большой экран Lunora + 2 превью-ссылки -->
+  <div id="portal" class="screen">
+    <video id="lunoraBig" controls playsinline webkit-playsinline preload="auto" src="./static/anim/lunora.mp4"></video>
+    <a id="noiraLink" class="pill pill-left" rel="noopener">Noira</a>
+    <a id="zaryumLink" class="pill pill-right" rel="noopener">Zaryum</a>
   </div>
 
   <div id="debug"></div>
-
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="./script.js?v=1"></script>
+  <script src="./script.js?v=3003"></script>
 </body>
 </html>
