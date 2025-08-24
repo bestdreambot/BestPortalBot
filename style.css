@@ -1,79 +1,40 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  background: #000;
-  overflow: hidden;
-  -webkit-tap-highlight-color: transparent;
+html,body{
+  height:100%; margin:0; background:#000; overflow:hidden;
+  -webkit-tap-highlight-color:transparent;
 }
-.screen {
-  display: none;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  justify-content: center;
-  align-items: center;
+.screen{
+  display:none; width:100%; height:100%;
+  justify-content:center; align-items:center; position:relative;
 }
-.screen.active { display: flex; }
+.screen.active{ display:flex; }
 
 /* Экран 1 */
-#logo {
-  max-width: 92vw;
-  max-height: 92vh;
-  cursor: pointer;
-  display: block;
+#logo{ max-width:92vw; max-height:92vh; cursor:pointer; display:block; }
+
+/* Экран 2 и 3: видео делает в 2 раза меньше */
+#anim, #lunora-video{
+  width:50vw; height:50vh;           /* в 2 раза меньше */
+  max-width:90vw; max-height:90vh;
+  object-fit:contain; background:#000; border-radius:8px;
+  display:none;                       /* показываем, когда готово */
+}
+#anim.ready, #lunora-video.ready{ display:block; }
+
+/* маленькая Lunora-кнопка */
+#lunora-btn{
+  position:absolute; top:6%; left:50%; transform:translateX(-50%);
+  width:120px; cursor:pointer; z-index:10; opacity:0; transition:opacity .2s;
+}
+#lunora-btn.show{ opacity:1; }
+
+/* кнопки YouTube сверху слева/справа */
+.yt-links{
+  position:absolute; top:5%; left:0; right:0; width:100%;
+  display:flex; justify-content:space-between; padding:0 24px; z-index:10;
+}
+.yt-links img{
+  width:90px; border:2px solid #fff; border-radius:10px; cursor:pointer;
 }
 
-/* Экран 2 */
-#anim {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  background: #000;
-}
-#lunora-btn {
-  position: absolute;
-  top: 8%;
-  left: 16px;            /* слева вверху */
-  width: 120px;
-  cursor: pointer;
-  display: none;         /* показываем только когда готово */
-  z-index: 10;
-}
-
-/* Экран 3 */
-#lunora-video {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  background: #000;
-}
-
-/* Точные позиции кнопок по углам */
-#noira {
-  position: absolute;
-  top: 6%;
-  left: 16px;
-  width: 110px;
-  cursor: pointer;
-  border: 2px solid #fff;
-  border-radius: 8px;
-  z-index: 10;
-}
-#zaryum {
-  position: absolute;
-  top: 6%;
-  right: 16px;
-  width: 110px;
-  cursor: pointer;
-  border: 2px solid #fff;
-  border-radius: 8px;
-  z-index: 10;
-}
-
-#debug {
-  position: fixed;
-  left: 8px; bottom: 8px;
-  color: #888;
-  font: 12px monospace;
-  z-index: 100;
-}
+/* отладка */
+#debug{ position:fixed; left:8px; bottom:8px; color:#888; font:12px monospace; z-index:100; }
