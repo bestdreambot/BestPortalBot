@@ -1,31 +1,79 @@
-html,body{
-  height:100%; margin:0; background:#000; overflow:hidden;
+html, body {
+  height: 100%;
+  margin: 0;
+  background: #000;
+  overflow: hidden;
   -webkit-tap-highlight-color: transparent;
 }
-.screen{ display:none; position:relative; width:100%; height:100%;
-  justify-content:center; align-items:center; }
-.screen.active{ display:flex; }
-#logo{ max-width:92vw; max-height:92vh; cursor:pointer; display:block; }
+.screen {
+  display: none;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+.screen.active { display: flex; }
 
-/* Screen 2 (animation) */
-#anim{ width:100%; height:100%; object-fit:contain; background:#000; }
-#lunora-btn{
-  position:absolute; left:16px; top:16px; width:96px; height:auto;
-  display:none; /* появится после готовности видео */
-  box-shadow:0 0 0 2px rgba(255,255,255,.15);
-  cursor:pointer;
+/* Экран 1 */
+#logo {
+  max-width: 92vw;
+  max-height: 92vh;
+  cursor: pointer;
+  display: block;
 }
 
-/* Screen 3 (portal) */
-#portal{ background:#000; }
-#lunora-full{ width:100%; height:100%; object-fit:contain; background:#000; }
-.side-btn{
-  position:absolute; top:6%; width:104px; height:auto;
-  background-size:contain; background-repeat:no-repeat; background-position:center;
-  text-indent:-9999px;
-  filter:drop-shadow(0 0 6px rgba(0,0,0,.6));
+/* Экран 2 */
+#anim {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
 }
-#noira-link{ left:2%; }
-#zaryum-link{ right:2%; }
+#lunora-btn {
+  position: absolute;
+  top: 8%;
+  left: 16px;            /* слева вверху */
+  width: 120px;
+  cursor: pointer;
+  display: none;         /* показываем только когда готово */
+  z-index: 10;
+}
 
-#debug{ position:fixed; left:8px; bottom:8px; color:#888; font:12px monospace; }
+/* Экран 3 */
+#lunora-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+/* Точные позиции кнопок по углам */
+#noira {
+  position: absolute;
+  top: 6%;
+  left: 16px;
+  width: 110px;
+  cursor: pointer;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  z-index: 10;
+}
+#zaryum {
+  position: absolute;
+  top: 6%;
+  right: 16px;
+  width: 110px;
+  cursor: pointer;
+  border: 2px solid #fff;
+  border-radius: 8px;
+  z-index: 10;
+}
+
+#debug {
+  position: fixed;
+  left: 8px; bottom: 8px;
+  color: #888;
+  font: 12px monospace;
+  z-index: 100;
+}
