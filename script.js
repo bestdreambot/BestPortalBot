@@ -1,53 +1,53 @@
-// 🔑 BestPortalBot — шаг с позиционированием значков (v=5001)
+// init + переходы: 1) лого -> 2) анимация + Lunora -> 3) Noira/Zaryum
 (function(){
   const $ = s => document.querySelector(s);
-  const dbg = m => { const el = $("#debug"); if (el) el.textContent = m || ""; };
+  const dbg = m => { const el=$("#debug"); if(el) el.textContent=m||""; };
 
-  const s1 = $("#screen-1");
-  const s2 = $("#screen-2");
-  const s3 = $("#screen-3");
-  const logo = $("#logo");
-  const video = $("#intro");
-  const lunora = $("#badge-lunora");
-
-  // TWA инициализация (не мешает обычному сайту)
+  const s1=$("#screen-1"), s2=$("#screen-2"), s3=$("#screen-3");
+  const logo=$("#logo"), vid=$("#introVideo"), lunora=$("#lunora");
   const tg = window.Telegram?.WebApp;
+
+  // Telegram init
   try{
-    if (tg){
-      tg.ready();
+    if(tg){
+      tg.ready();                 // фикс black screen
       tg.setBackgroundColor("#000000");
       tg.setHeaderColor("#000000");
       tg.expand();
-      if (tg.version && parseFloat(tg.version) >= 8.0 && tg.requestFullscreen){
-        tg.requestFullscreen();
-      } else {
-        setTimeout(()=>tg.expand(), 120);
+      setTimeout(()=>tg.expand(),120);
+      if (tg.isVersionAtLeast?.("8.0") && tg.requestFullscreen){
+        tg.requestFullscreen();   // даёт fullscreen в Telegram Web
       }
+      tg.onEvent?.("viewportChanged",e=>{ if(e?.isStateStable) { /* можно реагировать при желании */ }});
+      tg.onEvent?.("themeChanged", ()=> tg.setHeaderColor("#000000"));
     }
   }catch(e){/* no-op */}
 
 
-  // Экран 1 -> Экран 2
-  logo.addEventListener("click", () => {
+  // Шаг 1 -> Шаг 2
+  logo.addEventListener("click", ()=>{
     s1.classList.remove("active");
     s2.classList.add("active");
-    // автозапуск анимации
-    try { video.currentTime = 0; video.play().catch(()=>{}); } catch(e){}
+    // запускаем видео, но оставляем размер как у картинки
+    try{
+      vid.currentTime = 0;
+      vid.play().catch(()=>{ /* iOS может требовать повторный жест; не критично */ });
+    }catch(e){}
   });
 
-  // Кнопка Lunora -> Экран 3
-  lunora.addEventListener("click", () => {
+  // Шаг 2 -> Шаг 3 по клику на Lunora
+  lunora.addEventListener("click", ()=>{
     s2.classList.remove("active");
     s3.classList.add("active");
   });
 
-  // Fallback: если видео не грузится — всё равно показать Lunora через 1.5с
-  video.addEventListener("error", () => setTimeout(()=>{
-    if (!s3.classList.contains("active")) { s2.classList.add("active"); }
-  },1500));
-
-  // Для сайта (Visit Site) — показать ошибку пути, если логотип не найден
-  logo.addEventListener("error", () => {
-    dbg("Не найден логотип: ./static/img/BestPortal.jpg — проверьте путь/регистр имени.");
+  // Безопасность: скрыть любые тексты на кнопках (если браузер что-то добавит)
+  ["noira","zaryum"].forEach(id=>{
+    const el = $("#"+id);
+    if(el) el.textContent = "";
   });
+
+  // Сообщения об ошибках путей (для Visit Site)
+  logo.addEventListener("error", ()=> dbg("Нет ./static/img/BestPortal.jpg"));
+  vid.addEventListener("error",  ()=> dbg("Нет ./static/anim/bestportal.mp4"));
 })();
