@@ -1,82 +1,70 @@
 (function(){
-  const VER = new URLSearchParams(location.search).get('v') || Date.now();
-  const parts = location.pathname.split('/').filter(Boolean);
-  const project = parts[0] || 'BestPortalBot';
-  const ROOT = '/' + project + '/';
   const dbg = m => { const el = document.getElementById('debug'); if(el) el.textContent = m || ''; };
 
-  const tg = window.Telegram?.WebApp;
-  try{ if(tg){ tg.ready(); tg.expand(); tg.setBackgroundColor('#000'); tg.setHeaderColor?.('#000'); } }catch(_){}
+  const VER = new URLSearchParams(location.search).get('v') || '3006';
 
-  const paths = {
-    logo: ROOT + 'static/img/BestPortal.jpg?v=' + VER,
-    lunoraBtn: ROOT + 'static/img/lunora.png?v=' + VER,
-    animMp4: ROOT + 'static/anim/bestportal.mp4?v=' + VER,
-    lunoraMp4: ROOT + 'static/anim/lunora.mp4?v=' + VER
-  };
-
-  const you = {
-    noira: 'https://youtube.com/playlist?list=PLuaNqEUb7SmXUdZlHeY4HgbE29TWwfTiW&si=I6Ef3U8TNP1OAXu8',
-    zaryum:'https://youtube.com/playlist?list=PLuaNqEUb7SmVnWfr6seNIC_8uMPZSc-Xd&si=3A4GtV00Cx2EPmFC'
-  };
-
-  // Elements
+  // DOM
+  const logo         = document.getElementById('logo');
   const screenLogo   = document.getElementById('logo-screen');
   const screenAnim   = document.getElementById('anim-screen');
-  const screenPortal = document.getElementById('portal');
-  const logo         = document.getElementById('logo');
+  const screenPortal = document.getElementById('portal-screen');
+
   const anim         = document.getElementById('anim');
   const lunoraBtn    = document.getElementById('lunora-btn');
-  const lunoraFull   = document.getElementById('lunora-full');
-  const noiraLink    = document.getElementById('noira-link');
-  const zaryumLink   = document.getElementById('zaryum-link');
+  const lunoraVideo  = document.getElementById('lunora-video');
 
-  // preload images
-  const imgPreload = src => new Promise(res=>{ const i = new Image(); i.onload=res; i.onerror=res; i.src=src; });
+  const noira        = document.getElementById('noira');
+  const zaryum       = document.getElementById('zaryum');
 
-  // Setup logo
-  logo.src = paths.logo;
+  // Источники видео с версией (кэш-бастер)
+  anim.src        = './static/anim/bestportal.mp4?v=' + VER;
+  lunoraVideo.src = './static/anim/lunora.mp4?v=' + VER;
 
-  // Click logo -> show animation screen
-  logo.addEventListener('click', async ()=>{
+  // Telegram init
+  const tg = window.Telegram?.WebApp;
+  try{
+    if(tg){
+      tg.ready();
+      tg.expand();
+      tg.setBackgroundColor('#000000');
+      tg.setHeaderColor('#000000');
+    }
+  }catch(e){ /* ignore */ }
+
+  // Избавляемся от "белого квадрата": показываем Lunora только когда
+  // 1) видео anim готово к воспроизведению, и 2) сама картинка Lunora загружена
+  let animReady   = false;
+  let lunoraReady = lunoraBtn.complete; // если уже в кэше
+
+  anim.addEventListener('canplay', () => { animReady = true; maybeShowLunora(); });
+  lunoraBtn.addEventListener('load',   () => { lunoraReady = true; maybeShowLunora(); });
+
+  function maybeShowLunora(){
+    if(animReady && lunoraReady){
+      lunoraBtn.style.display = 'block';
+    }
+  }
+
+  // Переход 1 -> 2
+  logo.addEventListener('click', ()=>{
     screenLogo.classList.remove('active');
     screenAnim.classList.add('active');
-
-    anim.src = paths.animMp4;
-    anim.currentTime = 0;
-    anim.muted = true; // для автоплея
-    // показываем маленькую Lunora только после готовности кадров
-    lunoraBtn.style.display = 'none';
-    const onReady = () => {
-      setTimeout(()=>{ lunoraBtn.style.display = 'block'; }, 600); // мягкая задержка
-      anim.play().catch(()=>{});
-      anim.removeEventListener('loadeddata', onReady);
-      anim.removeEventListener('canplay', onReady);
-    };
-    anim.addEventListener('loadeddata', onReady);
-    anim.addEventListener('canplay', onReady);
-    // запасной прелоад превью
-    imgPreload(paths.lunoraBtn);
-    lunoraBtn.src = paths.lunoraBtn;
+    anim.play().catch(()=>{});
+    // страховка
+    setTimeout(()=>{ if(lunoraBtn.style.display==='none') lunoraBtn.style.display='block'; }, 1000);
   });
 
-  // Small Lunora click -> open Portal screen
+  // Переход 2 -> 3
   lunoraBtn.addEventListener('click', ()=>{
     screenAnim.classList.remove('active');
     screenPortal.classList.add('active');
-    lunoraFull.src = paths.lunoraMp4;
-    lunoraFull.play().catch(()=>{});
-    // установить иконки ссылок
-    noiraLink.style.backgroundImage = 'url(' + ROOT + 'static/img/Noira.jpg?v=' + VER + ')';
-    zaryumLink.style.backgroundImage = 'url(' + ROOT + 'static/img/Zaryum.jpg?v=' + VER + ')';
+    lunoraVideo.play().catch(()=>{});
   });
 
-  // openLink helper (Telegram or browser)
-  function openLink(url){
-    if(tg && tg.openLink){ tg.openLink(url, {try_instant_view: false}); }
-    else { window.open(url, '_blank', 'noopener'); }
-  }
+  // Ссылки на YouTube
+  const open = url => (tg && tg.openLink) ? tg.openLink(url) : window.open(url, '_blank');
 
-  noiraLink.addEventListener('click', ()=> openLink(you.noira));
-  zaryumLink.addEventListener('click', ()=> openLink(you.zaryum));
+  noira.addEventListener('click', ()=> open('https://youtube.com/playlist?list=PLuaNqEUb7SmXUdZlHeY4HgbE29TWwfTiW'));
+  zaryum.addEventListener('click',()=> open('https://youtube.com/playlist?list=PLuaNqEUb7SmVnWfr6seNIC_8uMPZSc-Xd'));
+
 })();
