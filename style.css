@@ -1,0 +1,71 @@
+html,body{
+  height:100%;
+  margin:0;
+  background:#000;
+  overflow:hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+.screen{
+  display:none;
+  width:100%;
+  height:100%;
+  justify-content:center;
+  align-items:center;
+  position:relative;
+}
+.screen.active{ display:flex; }
+
+#logo{
+  max-width:92vw;
+  max-height:92vh;
+  cursor:pointer;
+  display:block;
+}
+
+/* Шаг 2 */
+#anim{
+  width:min(60vw, 360px);
+  height:auto;
+  object-fit:contain;
+  background:#000;
+}
+#lunora-badge{
+  position:absolute;
+  top:calc(8px + env(safe-area-inset-top));
+  left:8px;
+  width:48px; height:48px;
+  border:none; border-radius:8px;
+  background:#000 center/contain no-repeat;
+  cursor:pointer;
+  opacity:0.92;
+}
+#lunora-badge:active{ opacity:0.8; }
+
+/* Шаг 3 */
+#stage3vid{
+  width:min(92vw, 720px);
+  height:auto;
+  object-fit:contain;
+  background:#000;
+}
+.yt-btn{
+  position:absolute;
+  top:calc(12px + env(safe-area-inset-top));
+  padding:10px 14px;
+  font:600 14px/1 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  color:#fff;
+  background:rgba(255,255,255,0.08);
+  backdrop-filter: blur(6px);
+  border:1px solid rgba(255,255,255,0.3);
+  border-radius:8px;
+  text-decoration:none;
+}
+#btn-noira{ left:12px; }
+#btn-zaryum{ right:12px; }
+
+#debug{
+  position:fixed;
+  left:8px; bottom:8px;
+  color:#888;
+  font:12px monospace;
+}
