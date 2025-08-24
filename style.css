@@ -1,26 +1,20 @@
-/* 🔑 базовое */
-html, body { height:100%; margin:0; background:#000; color:#fff; overflow:hidden; -webkit-tap-highlight-color:transparent; }
-.screen { display:none; width:100%; height:100%; justify-content:center; align-items:center; flex-direction:column; }
-.screen.active { display:flex; }
+html,body{margin:0;height:100%;background:#000;overflow:hidden;-webkit-tap-highlight-color:transparent;}
+.screen{display:none;position:relative;width:100%;height:100vh;justify-content:center;align-items:center;background:#000;}
+.screen.active{display:flex;}
+video, #logo{max-width:92vw;max-height:92vh;object-fit:contain;display:block;cursor:pointer;}
 
-/* Шаг 1 */
-#logo { max-width:92vw; max-height:70vh; cursor:pointer; display:block; }
+#debug{position:fixed;left:8px;bottom:8px;color:#888;font:12px monospace;}
 
-/* Шаг 2: видео BestPortal ограничено по размеру */
-#bp-video { max-width:92vw; max-height:70vh; object-fit:contain; }
+/* Бейдж Lunora (экран 2) — в 2 раза больше и ниже от «Закрыть» */
+.badge{position:absolute;top:calc(env(safe-area-inset-top,0px) + 56px);left:16px;width:72px;height:72px;object-fit:contain;cursor:pointer;}
 
-/* Маленькая кнопка Lunora (сдвинута вниз от системного хедера) */
-.badge { position:fixed; top:calc(env(safe-area-inset-top,0px) + 64px); left:16px; width:56px; height:56px; padding:0; border:0; background:transparent; cursor:pointer; }
-.badge img { width:100%; height:100%; display:block; border-radius:50%; }
+/* Кнопки Noira/Zaryum (экран 3) — крупнее и в углах */
+.corner{position:absolute;top:calc(env(safe-area-inset-top,0px) + 20px);}
+.corner.left{left:16px;}
+.corner.right{right:16px;}
+.round{width:88px;height:88px;border-radius:50%;display:block;object-fit:cover;}
 
-/* Шаг 3: видео Lunora + две кнопки поверх */
-#lunora-video { max-width:92vw; max-height:70vh; object-fit:contain; }
-
-/* Кнопки в углах; чуть ниже кнопки "Закрыть" Telegram */
-.corner-btn { position:fixed; top:calc(env(safe-area-inset-top,0px) + 72px); width:68px; height:68px; padding:0; border:0; background:transparent; cursor:pointer; }
-.corner-btn.left  { left:16px; }
-.corner-btn.right { right:16px; }
-.corner-btn img { width:100%; height:100%; display:block; border-radius:50%; }
-
-/* отладка */
-#debug { position:fixed; left:8px; bottom:8px; color:#888; font:12px monospace; }
+/* iOS safe area */
+@supports (padding: max(0px)){
+  body{padding-bottom:env(safe-area-inset-bottom);}
+}
