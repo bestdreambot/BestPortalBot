@@ -1,14 +1,31 @@
-html,body{height:100%;margin:0;background:#000;overflow:hidden;-webkit-tap-highlight-color:transparent}
-.screen{display:none;position:relative;width:100%;height:100%;justify-content:center;align-items:center}
-.screen.active{display:flex}
-#logo{max-width:92vw;max-height:92vh;cursor:pointer;display:block}
-#anim{width:100%;height:100%;object-fit:contain;background:#000}
-#lunoraSmall{position:absolute;left:16px;top:16px;width:96px;height:96px;object-fit:contain;border:1px solid rgba(255,255,255,.25);border-radius:8px;background:transparent;display:none;cursor:pointer}
-#lunoraSmall.show{display:block;animation:fadeIn .25s ease-out both}
-#lunoraBig{width:100%;height:100%;object-fit:contain;background:#000}
-.pill{position:absolute;top:12px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;text-decoration:none;font:14px/1.2 system-ui,sans-serif;border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(6px)}
-.pill:hover{background:rgba(255,255,255,.2)}
-.pill-left{left:12px}
-.pill-right{right:12px}
-#debug{position:fixed;left:8px;bottom:8px;color:#888;font:12px monospace}
-@keyframes fadeIn{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
+html,body{
+  height:100%; margin:0; background:#000; overflow:hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+.screen{ display:none; position:relative; width:100%; height:100%;
+  justify-content:center; align-items:center; }
+.screen.active{ display:flex; }
+#logo{ max-width:92vw; max-height:92vh; cursor:pointer; display:block; }
+
+/* Screen 2 (animation) */
+#anim{ width:100%; height:100%; object-fit:contain; background:#000; }
+#lunora-btn{
+  position:absolute; left:16px; top:16px; width:96px; height:auto;
+  display:none; /* появится после готовности видео */
+  box-shadow:0 0 0 2px rgba(255,255,255,.15);
+  cursor:pointer;
+}
+
+/* Screen 3 (portal) */
+#portal{ background:#000; }
+#lunora-full{ width:100%; height:100%; object-fit:contain; background:#000; }
+.side-btn{
+  position:absolute; top:6%; width:104px; height:auto;
+  background-size:contain; background-repeat:no-repeat; background-position:center;
+  text-indent:-9999px;
+  filter:drop-shadow(0 0 6px rgba(0,0,0,.6));
+}
+#noira-link{ left:2%; }
+#zaryum-link{ right:2%; }
+
+#debug{ position:fixed; left:8px; bottom:8px; color:#888; font:12px monospace; }
