@@ -1,26 +1,32 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#000000">
-<title>Best Portal</title>
-<link rel="stylesheet" href="./style.css?v=4005" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Best Portal</title>
+  <link rel="stylesheet" href="./style.css?v=5001" />
 </head>
 <body>
-<div id="logo-screen" class="screen active">
-<img id="logo" alt="Best Portal">
-</div>
+  <!-- Первый экран (лого) -->
+  <div id="logo-screen" class="screen active">
+    <img id="logo" alt="Best Portal">
+  </div>
 
-<div id="portal" class="screen">
-<p>Вход в портал…</p>
-</div>
+  <!-- Второй экран (анимация) -->
+  <div id="anim-screen" class="screen">
+    <video id="anim" playsinline webkit-playsinline muted>
+      <source src="./anim/bestportal.mp4?v=5001" type="video/mp4">
+    </video>
+  </div>
 
-<div id="debug"></div>
+  <!-- Третий экран (портал) -->
+  <div id="portal" class="screen">
+    <p>Вход в портал…</p>
+  </div>
 
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script src="./script.js?v=4005"></script>
+  <div id="debug"></div>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="./script.js?v=5001"></script>
 </body>
 </html>
