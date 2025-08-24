@@ -3,30 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Best Portal</title>
-  <link rel="stylesheet" href="./style.css?v=5001" />
+  <title>BestPortalBot</title>
+  <link rel="stylesheet" href="./style.css?v=5007" />
 </head>
 <body>
-  <!-- Экран 1: логотип -->
+  <!-- Шаг 1: логотип -->
   <section id="screen-1" class="screen active">
-    <img id="logo" class="logo" src="./static/img/BestPortal.jpg?v=5001" alt="BestPortal">
+    <img id="logo" src="./static/img/BestPortal.jpg?v=5007" alt="" />
   </section>
 
-  <!-- Экран 2: анимация + Lunora вверху слева -->
+  <!-- Шаг 2: анимация + Lunora в левом верхнем углу -->
   <section id="screen-2" class="screen">
-    <video id="intro" class="vid" src="./static/anim/bestportal.mp4?v=5001" playsinline muted></video>
-    <button id="badge-lunora" class="badge-lunora" aria-label="Lunora"></button>
+    <video id="introVideo" playsinline muted preload="auto">
+      <source src="./static/anim/bestportal.mp4?v=5007" type="video/mp4" />
+    </video>
+    <img id="lunora" class="badge left" src="./static/img/lunora.png?v=5007" alt="" />
   </section>
 
-  <!-- Экран 3: выбор плейлистов (Noira слева-сверху, Zaryum справа-сверху) -->
+  <!-- Шаг 3: Noira (левый верх), Zaryum (правый верх) -->
   <section id="screen-3" class="screen">
-    <a id="btn-noira" class="btn-circle btn-noira" href="https://youtube.com/playlist?list=PLuaNqEUb7SmXUdZlHeY4HgbE29TWwfTiW" target="_blank" rel="noopener">Noira</a>
-    <a id="btn-zaryum" class="btn-circle btn-zaryum" href="https://youtube.com/playlist?list=PLuaNqEUb7SmVnWfr6seNIC_8uMPZSc-Xd" target="_blank" rel="noopener">Zaryum</a>
+    <a id="noira"  class="btn-circle left"  href="https://youtube.com/playlist?list=PLuaNqEUb7SmXUdZlHeY4HgbE29TWwfTiW" target="_blank" rel="noopener"></a>
+    <a id="zaryum" class="btn-circle right" href="https://youtube.com/playlist?list=PLuaNqEUb7SmVnWfr6seNIC_8uMPZSc-Xd" target="_blank" rel="noopener"></a>
   </section>
 
   <div id="debug"></div>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="./script.js?v=5001"></script>
+  <script src="./script.js?v=5007"></script>
 </body>
 </html>
