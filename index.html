@@ -4,32 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Best Portal</title>
-  <link rel="stylesheet" href="./style.css?v=3006" />
+  <link rel="stylesheet" href="./style.css?v=3013" />
 </head>
 <body>
-  <!-- Экран 1 -->
+  <!-- Экран 1: логотип -->
   <div id="logo-screen" class="screen active">
     <img id="logo" src="./static/img/BestPortal.jpg" alt="Best Portal" />
   </div>
 
-  <!-- Экран 2 -->
+  <!-- Экран 2: анимация + маленькая Lunora -->
   <div id="anim-screen" class="screen">
     <video id="anim" preload="auto" playsinline muted></video>
-    <img id="lunora-btn" src="./static/img/Lunora.png" alt="Lunora" />
+    <img id="lunora-btn" src="./static/img/lunora.png" alt="Lunora" />
   </div>
 
-  <!-- Экран 3 -->
+  <!-- Экран 3: Lunora крупно + кнопки YouTube -->
   <div id="portal-screen" class="screen">
     <video id="lunora-video" preload="auto" playsinline muted loop></video>
-
-    <!-- Кнопки YouTube (по углам, чуть сверху) -->
-    <img id="noira"  src="./static/img/Noira.jpg"  alt="Noira"  />
-    <img id="zaryum" src="./static/img/Zaryum.jpg" alt="Zaryum" />
+    <div class="yt-links">
+      <img id="noira"  src="./static/img/Noira.jpg"  alt="Noira"  />
+      <img id="zaryum" src="./static/img/Zaryum.jpg" alt="Zaryum" />
+    </div>
   </div>
 
   <div id="debug"></div>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="./script.js?v=3006"></script>
+  <script src="./script.js?v=3013"></script>
 </body>
 </html>
