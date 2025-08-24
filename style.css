@@ -1,52 +1,41 @@
 html,body{
-height:100%;
-margin:0;
-background:#000;
-overflow:hidden;
--webkit-tap-highlight-color: transparent;
+  height:100%;
+  margin:0;
+  background:#000;
+  overflow:hidden;
 }
 .screen{
-display:none;
-width:100%;
-height:100%;
-justify-content:center;
-align-items:center;
+  display:none;
+  width:100%;
+  height:100%;
+  justify-content:center;
+  align-items:center;
 }
 .screen.active{ display:flex; }
 
 #logo{
-max-width:92vw;
-max-height:92vh;
-cursor:pointer;
-display:block;
+  max-width:92vw;
+  max-height:92vh;
+  cursor:pointer;
+  display:block;
 }
+
+#anim{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  background:#000;
+}
+
 #portal{
-color:#fff;
-font:20px/1.4 system-ui, sans-serif;
-text-align:center;
+  color:#fff;
+  font:20px/1.4 system-ui, sans-serif;
+  text-align:center;
 }
+
 #debug{
-position:fixed;
-left:8px; bottom:8px;
-color:#888;
-font:12px monospace;
-}
-
-/* iOS-specific styles */
-@supports (padding: max(0px)) {
-body {
-    padding-top: env(safe-area-inset-top);
-    padding-bottom: env(safe-area-inset-bottom);
-}
-}
-
-/* Стили для скрытия/затемнения заголовка */
-.telegram-webapp-header {
-opacity: 0.1 !important;
-transition: opacity 0.3s ease-in-out;
-}
-
-/* Затемнение текста в заголовке */
-.telegram-webapp-header * {
-color: #000000 !important;
+  position:fixed;
+  left:8px; bottom:8px;
+  color:#888;
+  font:12px monospace;
 }
