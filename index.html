@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Best Portal GPT</title>
+<link rel="stylesheet" href="./style.css?v=5001" />
+</head>
+<body>
+<!-- Экран с логотипом -->
+<div id="logo-screen" class="screen active">
+  <img id="logo" src="./static/img/BestPortal.jpg" alt="Best Portal GPT">
+</div>
+
+<!-- Экран с анимацией -->
+<div id="anim-screen" class="screen">
+  <video id="anim" autoplay playsinline muted>
+    <source src="./static/anim/bestportal.mp4" type="video/mp4">
+    Ваш браузер не поддерживает видео.
+  </video>
+</div>
+
+<div id="debug"></div>
+
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="./script.js?v=5001"></script>
+</body>
+</html>
