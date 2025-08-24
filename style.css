@@ -1,34 +1,26 @@
-/* базовое */
-html,body{height:100%;margin:0;background:#000;overflow:hidden;-webkit-tap-highlight-color:transparent;}
-.screen{position:fixed;inset:0;display:none;justify-content:center;align-items:center;background:#000;}
-.screen.active{display:flex;}
-#debug{position:fixed;left:8px;bottom:8px;color:#888;font:12px monospace;z-index:1000}
+/* 🔑 базовое */
+html, body { height:100%; margin:0; background:#000; color:#fff; overflow:hidden; -webkit-tap-highlight-color:transparent; }
+.screen { display:none; width:100%; height:100%; justify-content:center; align-items:center; flex-direction:column; }
+.screen.active { display:flex; }
 
-/* одинаковый визуальный размер для картинки и видео */
-#logo, #introVideo{
-  width:min(92vw,420px);   /* при необходимости поменять 420px */
-  height:auto;
-  object-fit:contain;
-  display:block;
-  cursor:pointer;
-}
+/* Шаг 1 */
+#logo { max-width:92vw; max-height:70vh; cursor:pointer; display:block; }
 
-/* Lunora и кнопки по углам */
-.badge{position:fixed;top:calc(12px + env(safe-area-inset-top));width:56px;height:56px;object-fit:contain;cursor:pointer;z-index:20}
-.badge.left{left:12px}
+/* Шаг 2: видео BestPortal ограничено по размеру */
+#bp-video { max-width:92vw; max-height:70vh; object-fit:contain; }
 
-.btn-circle{position:fixed;top:calc(14px + env(safe-area-inset-top));width:84px;height:84px;border-radius:50%;background:#111;box-shadow:0 4px 16px rgba(0,0,0,.55);z-index:20}
-.btn-circle.left{left:14px}
-.btn-circle.right{right:14px}
+/* Маленькая кнопка Lunora (сдвинута вниз от системного хедера) */
+.badge { position:fixed; top:calc(env(safe-area-inset-top,0px) + 64px); left:16px; width:56px; height:56px; padding:0; border:0; background:transparent; cursor:pointer; }
+.badge img { width:100%; height:100%; display:block; border-radius:50%; }
 
-/* применяем изображения без текста */
-#noira { background:url("./static/img/Noira.jpg?v=5007") center/cover no-repeat; }
-#zaryum{ background:url("./static/img/Zaryum.jpg?v=5007") center/cover no-repeat; }
+/* Шаг 3: видео Lunora + две кнопки поверх */
+#lunora-video { max-width:92vw; max-height:70vh; object-fit:contain; }
 
-/* убираем любой текстовый слой */
-a, p, span, figcaption, .debug-text{display:none !important;color:transparent !important;opacity:0 !important}
+/* Кнопки в углах; чуть ниже кнопки "Закрыть" Telegram */
+.corner-btn { position:fixed; top:calc(env(safe-area-inset-top,0px) + 72px); width:68px; height:68px; padding:0; border:0; background:transparent; cursor:pointer; }
+.corner-btn.left  { left:16px; }
+.corner-btn.right { right:16px; }
+.corner-btn img { width:100%; height:100%; display:block; border-radius:50%; }
 
-/* iOS safe-area */
-@supports(padding:max(0px)){
-  body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
-}
+/* отладка */
+#debug { position:fixed; left:8px; bottom:8px; color:#888; font:12px monospace; }
