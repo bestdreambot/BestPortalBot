@@ -1,12 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-<meta charset='UTF-8'>
-<title>BestPortalBot</title>
-<link rel='stylesheet' href='src/css/style.css'>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#000000">
+  <title>BestPortalBot</title>
+  <link rel="stylesheet" href="src/css/reset.css?v=1">
+  <link rel="stylesheet" href="src/css/style.css?v=1">
 </head>
 <body>
-<h1>Добро пожаловать в BestPortalBot</h1>
-<script src='src/js/main.js'></script>
+  <!-- Уровень 1: Логотип -->
+  <div id="logo-screen" class="screen active">
+    <img id="logo" src="/static/img/BestPortal.jpg" alt="" />
+  </div>
+
+  <!-- Уровень 2: Портал с маленькой анимацией -->
+  <div id="portal" class="screen">
+    <button id="apps-entry" title="Открыть приложения">≡</button>
+    <video id="portal-video" loop muted playsinline></video>
+  </div>
+
+  <!-- Уровень 3: Две «аппликации» -->
+  <div id="apps" class="screen">
+    <div class="app-grid">
+      <div class="app-card" data-character="Noira">
+        <img src="/static/img/Noira.jpg" alt="Noira">
+        <span>Noira</span>
+      </div>
+      <div class="app-card" data-character="Zaryum">
+        <img src="/static/img/Zaryum.jpg" alt="Zaryum">
+        <span>Zaryum</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Видеоплеер персонажей -->
+  <div id="character-video-container" class="screen">
+    <button id="back-btn" class="nav-btn" title="Назад">←</button>
+    <video id="character-video" loop muted playsinline></video>
+  </div>
+
+  <div id="debug"></div>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="src/js/utils.js?v=1"></script>
+  <script src="src/js/telegram.js?v=1"></script>
+  <script src="src/js/ui.js?v=1"></script>
+  <script src="src/js/main.js?v=1"></script>
 </body>
 </html>
