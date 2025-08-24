@@ -4,30 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Best Portal</title>
-  <link rel="stylesheet" href="./style.css?v=3004" />
+  <link rel="stylesheet" href="./style.css?v=3006" />
 </head>
 <body>
-  <!-- Screen 1: Logo -->
+  <!-- Экран 1 -->
   <div id="logo-screen" class="screen active">
-    <img id="logo" alt="Best Portal" />
+    <img id="logo" src="./static/img/BestPortal.jpg" alt="Best Portal" />
   </div>
 
-  <!-- Screen 2: Animation (BestPortal.mp4) with small Lunora button -->
+  <!-- Экран 2 -->
   <div id="anim-screen" class="screen">
-    <video id="anim" playsinline muted preload="metadata"></video>
-    <img id="lunora-btn" alt="Lunora" />
+    <video id="anim" preload="auto" playsinline muted></video>
+    <img id="lunora-btn" src="./static/img/Lunora.png" alt="Lunora" />
   </div>
 
-  <!-- Screen 3: Lunora full video + two side buttons -->
-  <div id="portal" class="screen">
-    <video id="lunora-full" playsinline muted controls preload="metadata"></video>
-    <a id="noira-link" class="side-btn" target="_blank" rel="noopener noreferrer"></a>
-    <a id="zaryum-link" class="side-btn" target="_blank" rel="noopener noreferrer"></a>
+  <!-- Экран 3 -->
+  <div id="portal-screen" class="screen">
+    <video id="lunora-video" preload="auto" playsinline muted loop></video>
+
+    <!-- Кнопки YouTube (по углам, чуть сверху) -->
+    <img id="noira"  src="./static/img/Noira.jpg"  alt="Noira"  />
+    <img id="zaryum" src="./static/img/Zaryum.jpg" alt="Zaryum" />
   </div>
 
   <div id="debug"></div>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="./script.js?v=3004"></script>
+  <script src="./script.js?v=3006"></script>
 </body>
 </html>
