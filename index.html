@@ -14,14 +14,17 @@
   </div>
 
   <!-- Экран 2: анимация BestPortal + кнопка Lunora -->
-  <div id="screen-best" class="screen">
-    <video id="bestVideo" playsinline muted autoplay loop src="./static/anim/bestportal.mp4"></video>
+  <div id="screen-best" class="screen" style="display:none">
+    <video id="bestVideo" playsinline muted autoplay loop preload="auto"
+           src="./static/anim/bestportal.mp4"></video>
     <img id="btnLunora" class="badge" src="./static/img/lunora.png" alt="Lunora">
   </div>
 
   <!-- Экран 3: анимация Lunora + 2 кнопки -->
-  <div id="screen-lunora" class="screen">
-    <video id="lunoraVideo" playsinline muted autoplay loop src="./static/anim/lunora.mp4"></video>
+  <div id="screen-lunora" class="screen" style="display:none">
+    <video id="lunoraVideo" playsinline muted autoplay loop preload="auto"
+           src="./static/anim/lunora.mp4"></video>
+
     <a class="corner left"  href="https://youtube.com/playlist?list=PLuaNqEUb7SmXUdZlHeY4HgbE29TWwfTiW" target="_blank" rel="noopener">
       <img class="round" src="./static/img/Noira.jpg"  alt="Noira">
     </a>
