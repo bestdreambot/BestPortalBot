@@ -1,14 +1,52 @@
-/* style.css — минимальный UI для 3 экранов + кнопки. 🔑 */
-html,body{height:100%;margin:0;background:#000;overflow:hidden;}
-.screen{display:none;position:relative;width:100%;height:100%;justify-content:center;align-items:center;background:#000;}
+/* База */
+html,body{height:100%;margin:0;background:#000;overflow:hidden;-webkit-tap-highlight-color:transparent;}
+.screen{position:fixed;inset:0;display:none;justify-content:center;align-items:center;}
 .screen.active{display:flex;}
+.logo{max-width:92vw;max-height:92vh;cursor:pointer;display:block;}
+.vid{width:100%;height:100%;object-fit:cover;}
 
-#logo{max-width:92vw;max-height:92vh;cursor:pointer;display:block;}
+/* Debug */
+#debug{position:fixed;left:8px;bottom:8px;color:#888;font:12px monospace;pointer-events:none;}
 
-#introVideo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;}
-#btn-lunora{position:absolute;top:14px;left:14px;width:56px;height:56px;cursor:pointer;border-radius:8px;opacity:.9;}
+/* Безопасные отступы iOS */
+:root{--inset-top:env(safe-area-inset-top,0px);--inset-bottom:env(safe-area-inset-bottom,0px);}
 
-#screen-3{justify-content:space-between;align-items:center;padding:0 18px;}
-.yt-btn{display:block;width:96px;height:96px;background-size:cover;background-position:center;border-radius:12px;box-shadow:0 0 12px rgba(0,0,0,.35);}
+/* Lunora вверху слева (экран 2) */
+.badge-lunora{
+  position:fixed; z-index:5;
+  top: calc(var(--inset-top) + 12px);
+  left: 12px;
+  width: 56px; height:56px;
+  border-radius:50%;
+  background: url("./static/img/lunora.png?v=5001") center/cover no-repeat;
+  border: 0; outline: 0; cursor: pointer;
+  box-shadow: 0 0 8px rgba(0,0,0,.45);
+}
 
-#debug{position:fixed;left:8px;bottom:8px;color:#888;font:12px monospace;}
+/* Кнопки на экране 3 (углы) */
+.btn-circle{
+  position:fixed; z-index:6;
+  width:84px; height:84px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; text-decoration:none; font:600 13px/1 system-ui, sans-serif;
+  box-shadow:0 4px 16px rgba(0,0,0,.55);
+  background:#111; /* подложка, сами логотипы можно сделать картинками позже */
+}
+.btn-noira{
+  top: calc(var(--inset-top) + 16px);
+  left: 16px;                    /* слева-сверху */
+  transform: translateZ(0);
+  background: url("./static/img/Noira.jpg?v=5001") center/cover no-repeat;
+}
+.btn-zaryum{
+  top: calc(var(--inset-top) + 12px);  /* чуть выше */
+  right: 18px;                         /* и немного левее от края */
+  transform: translateZ(0);
+  background: url("./static/img/Zaryum.jpg?v=5001") center/cover no-repeat;
+}
+
+/* Адаптивность: на очень узких экранах уменьшаем значки */
+@media (max-width:360px){
+  .badge-lunora{width:48px;height:48px;}
+  .btn-circle{width:72px;height:72px;}
+}
