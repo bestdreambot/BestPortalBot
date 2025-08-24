@@ -1,77 +1,14 @@
-
-html,body{
-  height:100%;
-  margin:0;
-  background:#000;
-  overflow:hidden;
-  -webkit-tap-highlight-color: transparent;
-  font-family: system-ui, -apple-system, sans-serif;
-}
-.screen{
-  display:none;
-  width:100%;
-  height:100%;
-  position:relative;
-  justify-content:center;
-  align-items:center;
-}
-.screen.active{ display:flex; }
-
-/* Лого на первом экране */
-#logo{
-  max-width:92vw;
-  max-height:92vh;
-  cursor:pointer;
-  display:block;
-}
-
-/* Экран 2: анимация и мини-иконка */
-#anim{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  background:#000;
-}
-#mini-lunora{
-  position:absolute;
-  top:12px; left:12px;
-  width:72px; height:72px;
-  border:none;
-  border-radius:8px;
-  background-size:cover;
-  background-position:center;
-  background-repeat:no-repeat;
-  box-shadow:0 2px 12px rgba(0,0,0,.6);
-  opacity:.95;
-  cursor:pointer;
-}
-
-/* Экран 3: большое видео + боковые превью */
-#lunora-video{
-  max-width:90vw;
-  max-height:90vh;
-  object-fit:contain;
-  background:#000;
-}
-#side-thumbs{
-  position:absolute;
-  top:20px; right:20px;
-  display:flex;
-  gap:12px;
-  flex-direction:column;
-}
-#side-thumbs img{
-  width:84px; height:84px;
-  object-fit:cover;
-  border-radius:8px;
-  box-shadow:0 2px 12px rgba(0,0,0,.6);
-  cursor:pointer;
-}
-
-#debug{
-  position:fixed;
-  left:8px; bottom:8px;
-  color:#888;
-  font:12px monospace;
-  z-index:999;
-}
+html,body{height:100%;margin:0;background:#000;overflow:hidden;-webkit-tap-highlight-color:transparent}
+.screen{display:none;position:relative;width:100%;height:100%;justify-content:center;align-items:center}
+.screen.active{display:flex}
+#logo{max-width:92vw;max-height:92vh;cursor:pointer;display:block}
+#anim{width:100%;height:100%;object-fit:contain;background:#000}
+#lunoraSmall{position:absolute;left:16px;top:16px;width:96px;height:96px;object-fit:contain;border:1px solid rgba(255,255,255,.25);border-radius:8px;background:transparent;display:none;cursor:pointer}
+#lunoraSmall.show{display:block;animation:fadeIn .25s ease-out both}
+#lunoraBig{width:100%;height:100%;object-fit:contain;background:#000}
+.pill{position:absolute;top:12px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;text-decoration:none;font:14px/1.2 system-ui,sans-serif;border:1px solid rgba(255,255,255,.25);backdrop-filter:blur(6px)}
+.pill:hover{background:rgba(255,255,255,.2)}
+.pill-left{left:12px}
+.pill-right{right:12px}
+#debug{position:fixed;left:8px;bottom:8px;color:#888;font:12px monospace}
+@keyframes fadeIn{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
