@@ -1,39 +1,20 @@
-(function(){
-  const tg = window.Telegram?.WebApp;
-  const dbg = m => { const d=document.getElementById('debug'); if(d) d.textContent=m||''; };
+html,body{margin:0;height:100%;background:#000;overflow:hidden;-webkit-tap-highlight-color:transparent;}
+.screen{display:none;position:relative;width:100%;height:100vh;justify-content:center;align-items:center;background:#000;}
+.screen.active{display:flex;}
 
-  // Экраны/элементы
-  const scrLogo   = document.getElementById('screen-logo');
-  const scrBest   = document.getElementById('screen-best');
-  const scrLunora = document.getElementById('screen-lunora');
-  const logo      = document.getElementById('logo');
-  const btnLunora = document.getElementById('btnLunora');
-  const bestVideo = document.getElementById('bestVideo');
-  const lunVideo  = document.getElementById('lunoraVideo');
+#logo, video{max-width:92vw;max-height:92vh;object-fit:contain;display:block;cursor:pointer}
 
-  // Telegram UI
-  try{
-    if(tg){
-      tg.ready();
-      tg.expand();
-      tg.setBackgroundColor('#000000');
-      tg.setHeaderColor('#000000');
-      setTimeout(()=>tg.expand(),120);
-    }
-  }catch(e){ console.log(e); }
+#debug{position:fixed;left:8px;bottom:8px;color:#888;font:12px monospace}
 
-  // Навигация
-  function show(el){ [scrLogo,scrBest,scrLunora].forEach(s=>s.classList.remove('active')); el.classList.add('active'); }
+/* Lunora бейдж (экран 2) — ниже “Закрыть” */
+.badge{position:absolute;top:calc(env(safe-area-inset-top,0px) + 56px);left:16px;width:72px;height:72px;object-fit:contain;cursor:pointer}
 
-  // Шаг 1 -> Шаг 2
-  logo.addEventListener('click', ()=>{ show(scrBest); bestVideo.play().catch(()=>{}); });
+/* Кнопки на экране 3 — крупные и в углах */
+.corner{position:absolute;top:calc(env(safe-area-inset-top,0px) + 20px)}
+.corner.left{left:16px}
+.corner.right{right:16px}
+.round{width:88px;height:88px;border-radius:50%;display:block;object-fit:cover}
 
-  // Шаг 2 -> Шаг 3
-  btnLunora.addEventListener('click', ()=>{ show(scrLunora); lunVideo.play().catch(()=>{}); });
-
-  // Подстраховка автоплея в iOS
-  [bestVideo,lunVideo].forEach(v=>{
-    v.muted = true; v.playsInline = true;
-    v.addEventListener('loadeddata',()=>v.play().catch(()=>{}));
-  });
-})();
+@supports (padding: max(0px)){
+  body{padding-bottom:env(safe-area-inset-bottom)}
+}
