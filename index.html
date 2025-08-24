@@ -1,4 +1,3 @@
-<!-- index.html — BestPortalBot / шаги: 1) лого → 2) анимация с Lunora → 3) ссылки Noira/Zaryum -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -8,21 +7,21 @@
   <link rel="stylesheet" href="./style.css?v=5001" />
 </head>
 <body>
-  <!-- Шаг 1: Лого -->
+  <!-- Экран 1: логотип -->
   <section id="screen-1" class="screen active">
-    <img id="logo" alt="BestPortal" />
+    <img id="logo" class="logo" src="./static/img/BestPortal.jpg?v=5001" alt="BestPortal">
   </section>
 
-  <!-- Шаг 2: Анимация + кнопка Lunora -->
+  <!-- Экран 2: анимация + Lunora вверху слева -->
   <section id="screen-2" class="screen">
-    <video id="introVideo" muted playsinline autoplay></video>
-    <img id="btn-lunora" alt="Lunora" />
+    <video id="intro" class="vid" src="./static/anim/bestportal.mp4?v=5001" playsinline muted></video>
+    <button id="badge-lunora" class="badge-lunora" aria-label="Lunora"></button>
   </section>
 
-  <!-- Шаг 3: Две кнопки (Noira / Zaryum) -->
+  <!-- Экран 3: выбор плейлистов (Noira слева-сверху, Zaryum справа-сверху) -->
   <section id="screen-3" class="screen">
-    <a id="btn-noira"  class="yt-btn" rel="noopener noreferrer" aria-label="Noira"></a>
-    <a id="btn-zaryum" class="yt-btn" rel="noopener noreferrer" aria-label="Zaryum"></a>
+    <a id="btn-noira" class="btn-circle btn-noira" href="https://youtube.com/playlist?list=PLuaNqEUb7SmXUdZlHeY4HgbE29TWwfTiW" target="_blank" rel="noopener">Noira</a>
+    <a id="btn-zaryum" class="btn-circle btn-zaryum" href="https://youtube.com/playlist?list=PLuaNqEUb7SmVnWfr6seNIC_8uMPZSc-Xd" target="_blank" rel="noopener">Zaryum</a>
   </section>
 
   <div id="debug"></div>
