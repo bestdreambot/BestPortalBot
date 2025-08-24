@@ -1,53 +1,34 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="theme-color" content="#000000">
-  <title>BestPortalBot</title>
-  <link rel="stylesheet" href="src/css/reset.css?v=1">
-  <link rel="stylesheet" href="src/css/style.css?v=1">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#000000" />
+<title>Best Portal</title>
+<link rel="stylesheet" href="./style.css?v=6004" />
 </head>
 <body>
-  <!-- Уровень 1: Логотип -->
+  <!-- Шаг 1: Лого -->
   <div id="logo-screen" class="screen active">
-    <img id="logo" src="/static/img/BestPortal.jpg" alt="" />
+    <img id="logo" alt="Best Portal">
   </div>
 
-  <!-- Уровень 2: Портал с маленькой анимацией -->
-  <div id="portal" class="screen">
-    <button id="apps-entry" title="Открыть приложения">≡</button>
-    <video id="portal-video" loop muted playsinline></video>
+  <!-- Шаг 2: Маленькая анимация + бейдж Lunora -->
+  <div id="anim-screen" class="screen">
+    <video id="anim" preload="auto" muted playsinline></video>
+    <button id="lunora-badge" aria-label="Lunora"></button>
   </div>
 
-  <!-- Уровень 3: Две «аппликации» -->
-  <div id="apps" class="screen">
-    <div class="app-grid">
-      <div class="app-card" data-character="Noira">
-        <img src="/static/img/Noira.jpg" alt="Noira">
-        <span>Noira</span>
-      </div>
-      <div class="app-card" data-character="Zaryum">
-        <img src="/static/img/Zaryum.jpg" alt="Zaryum">
-        <span>Zaryum</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- Видеоплеер персонажей -->
-  <div id="character-video-container" class="screen">
-    <button id="back-btn" class="nav-btn" title="Назад">←</button>
-    <video id="character-video" loop muted playsinline></video>
+  <!-- Шаг 3: Анимация + кнопки Noira / Zaryum -->
+  <div id="stage3" class="screen">
+    <video id="stage3vid" preload="auto" muted playsinline loop></video>
+    <a id="btn-noira" class="yt-btn" target="_blank" rel="noopener">Noira</a>
+    <a id="btn-zaryum" class="yt-btn" target="_blank" rel="noopener">Zaryum</a>
   </div>
 
   <div id="debug"></div>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="src/js/utils.js?v=1"></script>
-  <script src="src/js/telegram.js?v=1"></script>
-  <script src="src/js/ui.js?v=1"></script>
-  <script src="src/js/main.js?v=1"></script>
+  <script src="./script.js?v=6004"></script>
 </body>
 </html>
