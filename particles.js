@@ -1,21 +1,26 @@
-// particles.js v3016
-(function(){
-  function rand(a,b){ return a+Math.random()*(b-a); }
-  function clamp(v,a,b){ return Math.max(a,Math.min(b,v)); }
+// particles.js v3017 simplified
+window.FX=(function(){
+  let layers={};
   function fxLayer(canvas){
-    const ctx=canvas.getContext('2d'); let parts=[]; let running=false;
-    function resize(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
-    window.addEventListener('resize',resize); resize();
-    function loop(){ if(!running) return; ctx.clearRect(0,0,canvas.width,canvas.height);
-      for(let i=parts.length-1;i>=0;i--){const p=parts[i]; p.x+=p.vx; p.y+=p.vy; p.life--;
-        if(p.render) p.render(ctx,p); if(p.life<=0) parts.splice(i,1);}
-      if(parts.length>0) requestAnimationFrame(loop); else running=false; }
-    function add(b){ parts.push(...b); if(!running){ running=true; requestAnimationFrame(loop);} }
-    function rect(){ return canvas.getBoundingClientRect(); }
-    return {addBurst:add, rect};
+    const ctx=canvas.getContext('2d');
+    const state={parts:[],running:false,last:0};
+    function loop(t){
+      if(!state.running)return;
+      const now=t||performance.now();const dt=Math.min(0.05,(now-state.last)/1000);state.last=now;
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      for(let i=state.parts.length-1;i>=0;i--){
+        const p=state.parts[i];p.x+=p.vx*dt;p.y+=p.vy*dt;p.life-=dt;
+        if(p.render) p.render(ctx,p); if(p.life<=0) state.parts.splice(i,1);
+      }
+      if(state.parts.length>0) requestAnimationFrame(loop); else state.running=false;
+    }
+    function add(parts){state.parts.push(...parts);if(!state.running){state.running=true;state.last=performance.now();requestAnimationFrame(loop);}}
+    return {add};
   }
-  function mk(x,y,vx,vy,life,render){return {x,y,vx,vy,life,render};}
-  function renderSpark(ctx,p){ctx.strokeStyle='#ff0';ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x-p.vx*2,p.y-p.vy*2);ctx.stroke();}
-  function renderRing(ctx,p){ctx.strokeStyle='#fff';ctx.beginPath();ctx.arc(p.x,p.y,20,0,Math.PI*2);ctx.stroke();}
-  window.FX={layers:{},attach(id){const c=document.getElementById(id);if(!c)return null;const l=fxLayer(c);this.layers[id]=l;return l;},emit(id,type,x,y){const l=this.layers[id];if(!l)return;let arr=[];switch(type){case 'sparks':for(let i=0;i<10;i++)arr.push(mk(x,y,rand(2,5),rand(2,5),20,renderSpark));break;case 'ring':arr.push(mk(x,y,0,0,30,renderRing));break;case 'notes':for(let i=0;i<6;i++)arr.push(mk(x,y,rand(-2,2),rand(-5,-2),30,renderSpark));break;case 'squares':for(let i=0;i<6;i++)arr.push(mk(x,y,rand(-3,3),rand(-3,3),25,renderSpark));break;case 'boom':for(let i=0;i<20;i++)arr.push(mk(x,y,rand(-6,6),rand(-6,6),30,renderSpark));break;}l.addBurst(arr);}};
+  function spark(x,y){return {x,y,vx:Math.random()*200-100,vy:Math.random()*200-100,life:0.5,render:(ctx,p)=>{ctx.fillStyle='#ffd26a';ctx.fillRect(p.x,p.y,2,2);}};}
+  function ring(x,y){return {x,y,vx:0,vy:0,life:0.5,render:(ctx,p)=>{ctx.strokeStyle='#ffb400';ctx.beginPath();ctx.arc(p.x,p.y,20,0,Math.PI*2);ctx.stroke();}};}
+  return {
+    attach(id){const c=document.getElementById(id);if(!c)return;layers[id]=fxLayer(c);return layers[id];},
+    emit(id,type,x,y){const l=layers[id];if(!l)return;let parts=[];if(type==='sparks'){for(let i=0;i<10;i++)parts.push(spark(x,y));}if(type==='ring'){parts.push(ring(x,y));}l.add(parts);}
+  };
 })();
