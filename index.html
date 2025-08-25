@@ -1,35 +1,20 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <title>Best Portal</title>
-  <link rel="stylesheet" href="./style.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Best Portal</title>
+<link rel="stylesheet" href="./style.css?v=1" />
 </head>
 <body>
-  <!-- Экран 1: лого -->
-  <div id="logo-screen" class="screen active">
-    <img id="logo" src="./static/img/BestPortal.jpg" alt="Best Portal" />
-  </div>
-
-  <!-- Экран 2: анимация портала + кнопка Lunora -->
-  <div id="anim-screen" class="screen">
-    <video id="anim" src="./static/anim/bestportal.mp4" preload="auto" playsinline muted></video>
-    <img id="lunora-btn" src="./static/img/lunora.png" alt="Lunora" />
-  </div>
-
-  <!-- Экран 3: анимация Lunora + ссылки -->
-  <div id="portal-screen" class="screen">
-    <video id="lunora-video" src="./static/anim/lunora.mp4" preload="auto" playsinline muted loop></video>
-    <div class="yt-links">
-      <img id="noira"  src="./static/img/Noira.jpg"  alt="Noira" />
-      <img id="zaryum" src="./static/img/Zaryum.jpg" alt="Zaryum" />
-    </div>
-  </div>
-
-  <div id="debug"></div>
-
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="./script.js"></script>
+<div id="logo-screen" class="screen active">
+<img id="logo" alt="Best Portal">
+</div>
+<div id="portal" class="screen">
+<p>Вход в портал…</p>
+</div>
+<div id="debug"></div>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script src="./script.js?v=1"></script>
 </body>
 </html>
