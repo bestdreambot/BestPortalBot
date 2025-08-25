@@ -1,31 +1,86 @@
 html,body{
-height:100%;
-margin:0;
-background:#000;
-overflow:hidden;
+  height:100%;
+  margin:0;
+  background:#000;
+  overflow:hidden;
+  -webkit-tap-highlight-color: transparent;
 }
 .screen{
-display:none;
-width:100%;
-height:100%;
-justify-content:center;
-align-items:center;
+  display:none;
+  width:100%;
+  height:100%;
+  justify-content:center;
+  align-items:center;
+  position:relative;
 }
 .screen.active{ display:flex; }
+
+/* Экран 1: ЛОГО (уменьшен в 2 раза) */
 #logo{
-max-width:92vw;
-max-height:92vh;
-cursor:pointer;
-display:block;
+  max-width:50vw;
+  max-height:50vh;
+  cursor:pointer;
+  display:block;
 }
-#portal{
-color:#fff;
-font:20px/1.4 system-ui, sans-serif;
-text-align:center;
+
+/* Экран 2: анимация (уменьшена в 2 раза) */
+#anim{
+  width:auto;
+  height:auto;
+  max-width:50vw;
+  max-height:50vh;
+  object-fit:contain;
+  background:#000;
 }
+
+/* Кнопка Lunora */
+#lunora-btn{
+  position:absolute;
+  top:6%;
+  left:50%;
+  transform:translateX(-50%);
+  width:120px;
+  height:auto;
+  cursor:pointer;
+  display:none;
+  z-index:10;
+}
+
+/* Экран 3: видео Lunora (уменьшено в 2 раза) */
+#lunora-video{
+  width:auto;
+  height:auto;
+  max-width:50vw;
+  max-height:50vh;
+  object-fit:contain;
+  background:#000;
+}
+
+/* Кнопки YouTube без белых квадратов */
+.yt-links{
+  position:absolute;
+  top:4%;
+  width:100%;
+  display:flex;
+  justify-content:space-between;
+  padding:0 20px;
+  z-index:11;
+}
+.yt-links img{
+  width:96px;
+  height:96px;
+  object-fit:cover;
+  border-radius:14px;
+  border:2px solid #fff;
+  box-shadow:0 0 12px rgba(255,255,255,.25);
+  cursor:pointer;
+  background:transparent;
+}
+
 #debug{
-position:fixed;
-left:8px; bottom:8px;
-color:#888;
-font:12px monospace;
+  position:fixed;
+  left:8px; bottom:8px;
+  color:#888;
+  font:12px monospace;
+  z-index:100;
 }
