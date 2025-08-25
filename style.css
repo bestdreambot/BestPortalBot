@@ -1,68 +1,31 @@
 html,body{
-  height:100%;
-  margin:0;
-  background:#000;
-  overflow:hidden;
-  -webkit-tap-highlight-color: transparent;
+height:100%;
+margin:0;
+background:#000;
+overflow:hidden;
 }
 .screen{
-  display:none;
-  width:100%;
-  height:100%;
-  justify-content:center;
-  align-items:center;
-  position:relative;
+display:none;
+width:100%;
+height:100%;
+justify-content:center;
+align-items:center;
 }
 .screen.active{ display:flex; }
-
-/* Единый визуальный размер для лого и обоих видео */
-#logo, #anim, #lunora-video{
-  width:50vw;
-  max-width:640px;
-  height:auto;
-  object-fit:contain;
-  display:block;
-  background:#000;
-  cursor:pointer;
+#logo{
+max-width:92vw;
+max-height:92vh;
+cursor:pointer;
+display:block;
 }
-
-/* Кнопка Lunora на экране 2 */
-#lunora-btn{
-  position:absolute;
-  top:6%;
-  left:6%;
-  width:90px;
-  height:auto;
-  cursor:pointer;
-  display:none; /* появляется с задержкой */
+#portal{
+color:#fff;
+font:20px/1.4 system-ui, sans-serif;
+text-align:center;
 }
-
-/* Ссылки на экране 3 */
-.yt-links{
-  position:absolute;
-  top:6%;
-  left:0;
-  width:100%;
-  display:flex;
-  justify-content:space-between;
-  align-items:flex-start;
-  padding:0 6%;
-  pointer-events:none;
-}
-.yt-links img{
-  width:96px;
-  height:auto;
-  pointer-events:auto;
-  border:none;           /* без рамок */
-  background:transparent;/* без белого фона */
-}
-/* Сдвиг Zaryum чуть левее, чтобы не обрезалось по краю */
-#zaryum{ margin-right:2%; }
-
 #debug{
-  position:fixed;
-  left:8px; bottom:8px;
-  color:#888;
-  font:12px monospace;
-  z-index:100;
+position:fixed;
+left:8px; bottom:8px;
+color:#888;
+font:12px monospace;
 }
