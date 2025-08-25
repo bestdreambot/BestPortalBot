@@ -10,30 +10,47 @@
   <link rel="apple-touch-icon" href="./static/img/icon-192.png">
   <link rel="manifest" href="./manifest.json">
   <title>Best Portal</title>
-  <link rel="stylesheet" href="./style.css?v=3011" />
+  <link rel="stylesheet" href="./style.css?v=3015" />
 </head>
 <body>
+  <!-- Экран 1: Логотип -->
   <div id="logo-screen" class="screen active">
     <img id="logo" src="./static/img/BestPortal.jpg" alt="Best Portal">
     <button id="install-btn" class="install-btn">Установить приложение</button>
   </div>
 
+  <!-- Экран 2: Анимация BestPortal -->
   <div id="anim-screen" class="screen">
+    <canvas class="fx-layer" id="fx-anim"></canvas>
     <video id="anim-video" preload="auto" playsinline muted loop></video>
-    <div class="bottom-bar center">
+    <div class="bottom-bar">
       <img id="lunora-btn" src="./static/img/Lunora.png" alt="Lunora">
+      <img id="best-btn"  src="./static/img/best.jpg"    alt="Best">
     </div>
   </div>
 
+  <!-- Экран 3: Анимация Lunora -->
   <div id="portal-screen" class="screen">
+    <canvas class="fx-layer" id="fx-portal"></canvas>
     <video id="lunora-video" preload="auto" playsinline muted loop></video>
-    <div class="bottom-bar row">
+    <div class="bottom-bar">
       <img id="noira-btn"  src="./static/img/Noira.jpg"  alt="Noira">
       <img id="zaryum-btn" src="./static/img/Zaryum.jpg" alt="Zaryum">
     </div>
   </div>
 
+  <!-- Экран 3.1: Команда проекта -->
+  <div id="team-screen" class="screen">
+    <canvas class="fx-layer" id="fx-team"></canvas>
+    <div class="team top4"></div>
+    <div class="team mid3"></div>
+    <video id="best-video" preload="auto" playsinline muted loop></video>
+    <div class="team mid3b"></div>
+    <div class="team bottom4"></div>
+  </div>
+
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="./script.js?v=3011"></script>
+  <script src="./particles.js?v=3015"></script>
+  <script src="./script.js?v=3015"></script>
 </body>
 </html>
