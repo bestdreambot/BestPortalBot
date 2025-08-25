@@ -1,1 +1,0 @@
-export function initTelegram(){try{const tg=window.Telegram?.WebApp;if(tg){tg.ready();tg.expand();tg.setBackgroundColor('#000');tg.setHeaderColor('#000');}}catch(e){}}

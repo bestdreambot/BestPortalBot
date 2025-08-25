@@ -1,1 +1,0 @@
-import {dbg} from './utils.js';import {initTelegram} from './telegram.js';import {show} from './ui.js';export function boot(){initTelegram();dbg('Готово (src)');show('logo-screen');}

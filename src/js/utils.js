@@ -1,1 +1,0 @@
-export const dbg=(m)=>{const el=document.getElementById('debug');if(el) el.textContent=m||'';};
