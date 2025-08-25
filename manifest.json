@@ -3,7 +3,6 @@
   "short_name": "BestPortal",
   "description": "Портал в мир Best Portal",
   "start_url": "/BestPortalBot/",
-  "scope": "/BestPortalBot/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
