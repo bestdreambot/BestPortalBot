@@ -1,74 +1,91 @@
-(function(){
-  const dbg = m => { const el = document.getElementById('debug'); if(el) el.textContent = m || ''; };
+(function () {
+  const dbg = m => { const el = document.getElementById('debug'); if (el) el.textContent = m || ''; };
 
+  // Версия для кэша и стартовый экран (?v=1234&screen=portal)
+  const qs = new URLSearchParams(location.search);
+  const VER = qs.get('v') || Date.now();
+  const START_SCREEN = qs.get('screen'); // 'portal' | 'logo' | null
+
+  // Корень проекта на GitHub Pages: /<repo>/
+  // Надёжно, даже если страница по адресу /<repo>/subdir/...
+  const pathParts = location.pathname.split('/').filter(Boolean);
+  const project = pathParts.length ? pathParts[0] : 'BestPortalBot';
+  const ROOT = '/' + project + '/';
+
+  // DOM
   const logo = document.getElementById('logo');
   const screenLogo = document.getElementById('logo-screen');
-  const screenAnim = document.getElementById('anim-screen');
-  const screenPortal = document.getElementById('portal-screen');
+  const screenPortal = document.getElementById('portal');
 
-  const anim = document.getElementById('anim');
-  const lunoraBtn = document.getElementById('lunora-btn');
-  const lunoraVideo = document.getElementById('lunora-video');
-
-  const noira = document.getElementById('noira');
-  const zaryum = document.getElementById('zaryum');
-
-  const VER = new URLSearchParams(location.search).get('v') || Date.now();
-
-  // Источники медиа
-  anim.src = './static/anim/bestportal.mp4?v=' + VER;
-  lunoraVideo.src = './static/anim/lunora.mp4?v=' + VER;
-
-  // Telegram init
-  const tg = window.Telegram && window.Telegram.WebApp;
-  try{
-    if(tg){
+  // Telegram
+  const tg = window.Telegram?.WebApp;
+  try {
+    if (tg) {
       tg.ready();
       tg.expand();
       tg.setBackgroundColor('#000000');
-      tg.setHeaderColor && tg.setHeaderColor('#000000');
+      tg.setHeaderColor?.('#000000');
     }
-  }catch(e){}
+  } catch (_) {}
 
-  // Показ кнопки Lunora стабильно — когда видео готово ИЛИ через таймаут
-  let shown = false;
-  const showLunora = () => {
-    if (shown) return;
-    shown = true;
-    lunoraBtn.style.opacity = '1';
-    lunoraBtn.style.pointerEvents = 'auto';
-  };
-  anim.addEventListener('canplay', showLunora);
-  setTimeout(showLunora, 800);
+  // Хаптика
+  const h = tg?.HapticFeedback;
+  const tap = () => h?.impactOccurred?.('light');
 
-  // Экран1 -> Экран2
-  logo.addEventListener('click', ()=>{
-    screenLogo.classList.remove('active');
-    screenAnim.classList.add('active');
-    anim.play().catch(()=>{});
+  // Лого: кандидаты с учётом регистра/расширений
+  const CANDIDATES = [
+    ROOT + 'img/BestPortal.jpg?v=' + VER,   // основной
+    ROOT + 'img/bestportal.jpeg?v=' + VER,  // запасной
+    ROOT + 'img/bestportal.png?v=' + VER    // запасной
+  ];
+
+  function tryLoad(list) {
+    if (!list.length) { dbg('Лого не найдено'); return; }
+    const url = list.shift();
+    logo.onload = () => dbg('');
+    logo.onerror = () => { dbg('Ошибка загрузки: ' + url); tryLoad(list); };
+    logo.src = url;
+    dbg('Загрузка: ' + url);
+  }
+  tryLoad(CANDIDATES.slice());
+
+  // Управление экранами
+  function setScreen(name) {
+    if (name === 'portal') {
+      screenLogo.classList.remove('active');
+      screenPortal.classList.add('active');
+      tg?.BackButton?.show?.();
+    } else { // logo
+      screenPortal.classList.remove('active');
+      screenLogo.classList.add('active');
+      tg?.BackButton?.hide?.();
+    }
+    dbg('');
+  }
+
+  // Стартовый экран из URL
+  if (START_SCREEN === 'portal') setScreen('portal');
+
+  // Клик по логотипу → в портал
+  let locked = false;
+  logo.addEventListener('click', () => {
+    if (locked) return;
+    locked = true;
+    tap();
+    setScreen('portal');
+    // небольшой unlock, чтобы не ловить двойные тапы
+    setTimeout(() => { locked = false; }, 400);
   });
 
-  // Экран2 -> Экран3
-  lunoraBtn.addEventListener('click', ()=>{
-    screenAnim.classList.remove('active');
-    screenPortal.classList.add('active');
-    lunoraVideo.play().catch(()=>{});
-  });
+  // BackButton Telegram → назад к лого
+  tg?.BackButton?.onClick?.(() => setScreen('logo'));
 
-  // Экран3 -> назад на Экран2 (тап по Lunora)
-  lunoraVideo.addEventListener('click', ()=>{
-    lunoraVideo.pause();
-    screenPortal.classList.remove('active');
-    screenAnim.classList.add('active');
-  });
-
-  // Открытие ютуб-ссылок
-  const open = url => {
-    if (tg && tg.openLink) tg.openLink(url);
-    else window.open(url, '_blank', 'noopener,noreferrer');
-  };
-  noira.addEventListener('click', ()=> open('https://youtube.com/playlist?list=PLuaNqEUb7SmXUdZlHeY4HgbE29TWwfTiW'));
-  zaryum.addEventListener('click', ()=> open('https://youtube.com/playlist?list=PLuaNqEUb7SmVnWfr6seNIC_8uMPZSc-Xd'));
-
-  dbg('loaded');
+  // Резервный таймаут входа в портал, если что-то зависло после загрузки
+  // Сработает только если пользователь уже на экране лого дольше 10 сек
+  setTimeout(() => {
+    if (screenLogo.classList.contains('active') && !screenPortal.classList.contains('active')) {
+      setScreen('portal');
+      dbg('Автовход в портал (резерв)');
+    }
+  }, 10000);
 })();
