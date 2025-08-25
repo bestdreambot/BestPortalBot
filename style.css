@@ -6,7 +6,6 @@ html, body {
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;
 }
-
 .screen {
   display: none;
   width: 100%;
@@ -17,42 +16,37 @@ html, body {
   flex-direction: column;
 }
 .screen.active { display: flex; }
-
 #logo, #anim-video, #lunora-video, #best-video {
   max-width: 80%;
   max-height: 60%;
   object-fit: contain;
 }
-
 .bottom-bar {
   position: absolute;
-  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: calc(5% + env(safe-area-inset-bottom, 0px));
+  width: 100%;
   display: flex;
+  justify-content: center;
   gap: 20px;
   z-index: 10;
   padding: 0 env(safe-area-inset-right, 0px) 0 env(safe-area-inset-left, 0px);
 }
-
-.bottom-bar img { width: 60px; height: 60px; cursor: pointer; }
-
+#lunora-btn, #best-btn, #noira-btn, #zaryum-btn {
+  width: 80px;
+  height: 80px;
+  cursor: pointer;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+}
 #team-screen {
   justify-content: space-between;
-  padding: calc(20px + env(safe-area-inset-top, 0px)) 0 calc(20px + env(safe-area-inset-bottom, 0px)) 0;
+  padding: 20px 0;
 }
-
 .team { display: flex; justify-content: center; gap: 12px; width: 100%; }
 .team img {
-  width: 64px; height: 64px; border-radius: 50%;
-  border: 2px solid #fff; object-fit: cover;
+  width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid #ffd26a;
 }
-
-.install-btn {
-  position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
-  padding: 10px 20px; background: rgba(0,136,204,0.8); color: white;
-  border: none; border-radius: 20px; font-size: 14px; cursor: pointer; z-index: 10;
-  transition: all 0.3s ease;
+@supports (padding: max(0px)) {
+  body { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
 }
-.install-btn:hover { background: rgba(0,136,204,1); transform: translateX(-50%) scale(1.05); }
-.install-btn.hidden { display: none; }
