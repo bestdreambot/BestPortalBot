@@ -10,19 +10,12 @@
   <link rel="apple-touch-icon" href="./static/img/icon-192.png">
   <link rel="manifest" href="./manifest.json">
   <title>Best Portal</title>
-  <link rel="preload" href="./static/anim/bestportal.mp4" as="video">
-  <link rel="preload" href="./static/img/BestPortal.jpg" as="image">
-  <link rel="stylesheet" href="./style.css?v=3020" />
+  <link rel="stylesheet" href="./style.css?v=3021" />
 </head>
 <body>
-  <canvas id="effects-canvas" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:1000"></canvas>
-
-  <!-- Экран 1 -->
   <div id="logo-screen" class="screen active">
     <img id="logo" src="./static/img/BestPortal.jpg" alt="Best Portal">
   </div>
-
-  <!-- Экран 2 -->
   <div id="anim-screen" class="screen">
     <video id="anim-video" preload="auto" playsinline muted loop></video>
     <div class="bottom-bar">
@@ -30,8 +23,6 @@
       <img id="best-btn" src="./static/img/best.jpg" alt="Best">
     </div>
   </div>
-
-  <!-- Экран 3 -->
   <div id="portal-screen" class="screen">
     <video id="lunora-video" preload="auto" playsinline muted loop></video>
     <div class="bottom-bar">
@@ -39,18 +30,14 @@
       <img id="zaryum-btn" src="./static/img/Zaryum.jpg" alt="Zaryum">
     </div>
   </div>
-
-  <!-- Экран 3.1 -->
   <div id="team-screen" class="screen">
-    <div class="team top4"></div>
-    <div class="team mid3"></div>
+    <div class="team-row top-row"></div>
+    <div class="team-row middle-row"></div>
     <video id="best-video" preload="auto" playsinline muted loop></video>
-    <div class="team mid3b"></div>
-    <div class="team bottom4"></div>
+    <div class="team-row middle-row"></div>
+    <div class="team-row bottom-row"></div>
   </div>
-
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="./particles.js?v=3020"></script>
-  <script src="./script.js?v=3020"></script>
+  <script src="./script.js?v=3021"></script>
 </body>
 </html>
