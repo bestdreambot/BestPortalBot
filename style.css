@@ -39,14 +39,14 @@ html, body {
   object-fit: cover;
   border: 2px solid #fff;
 }
-#team-screen {
-  justify-content: space-between;
-  padding: 20px 0;
-}
-.team { display: flex; justify-content: center; gap: 12px; width: 100%; }
-.team img {
-  width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid #ffd26a;
-}
+#team-screen { justify-content: space-around; padding: 10px 0; }
+.team-row { display: flex; justify-content: center; gap: 12px; margin: 5px 0; }
+.team-row img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 2px solid #ffd26a; }
+#best-video { max-width: 70%; max-height: 30%; margin: 10px 0; }
 @supports (padding: max(0px)) {
   body { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
+}
+@media (max-height: 700px) {
+  .team-row img { width: 50px; height: 50px; }
+  #best-video { max-height: 25%; margin: 5px 0; }
 }
