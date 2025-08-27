@@ -5,7 +5,9 @@ html, body {
   background: #000;
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;
+  font-family: -apple-system, system-ui, Segoe UI, Roboto, sans-serif;
 }
+
 .screen {
   display: none;
   width: 100%;
@@ -15,38 +17,48 @@ html, body {
   position: relative;
   flex-direction: column;
 }
+
 .screen.active { display: flex; }
-#logo, #anim-video, #lunora-video, #best-video, #aleorix-video {
+
+/* Унифицированные размеры медиа (аккуратно вписываются) */
+#logo, #anim-video, #lunora-video, #best-video, #aliorix-video {
   max-width: 80%;
   max-height: 60%;
   object-fit: contain;
 }
+
+/* Нижняя панель кнопок без белых рамок */
 .bottom-bar {
   position: absolute;
   bottom: calc(5% + env(safe-area-inset-bottom, 0px));
   width: 100%;
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 18px;
   z-index: 10;
   padding: 0 env(safe-area-inset-right, 0px) 0 env(safe-area-inset-left, 0px);
 }
+
 .bottom-bar img {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
+  width: 78px;
+  height: 78px;
   cursor: pointer;
-}
-.team-row {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin: 5px 0;
-}
-.team-row img {
-  width: 60px;
-  height: 60px;
   border-radius: 50%;
   object-fit: cover;
+  border: none;                 /* без белых кругов */
+  box-shadow: 0 2px 8px rgba(255,255,255,.25);
+}
+
+/* Экран команды */
+#team-screen { justify-content: space-around; padding: 12px 0; }
+.team-row { display: flex; justify-content: center; gap: 12px; margin: 4px 0; }
+.team-row img {
+  width: 58px; height: 58px; border-radius: 50%; object-fit: cover;
+  border: none; box-shadow: 0 1px 4px rgba(0,0,0,.35);
+}
+
+/* Адаптация */
+@media (max-height: 700px){
+  .bottom-bar img { width: 68px; height: 68px; }
+  .team-row img { width: 50px; height: 50px; }
 }
