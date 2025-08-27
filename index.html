@@ -10,34 +10,34 @@
   <link rel="apple-touch-icon" href="./static/img/icon-192.png">
   <link rel="manifest" href="./manifest.json">
   <title>Best Portal</title>
-  <link rel="stylesheet" href="./style.css?v=3022" />
+  <link rel="stylesheet" href="./style.css?v=3024" />
 </head>
 <body>
-  <!-- Экран 1 -->
+  <!-- Экран 1: Логотип -->
   <div id="logo-screen" class="screen active">
     <img id="logo" src="./static/img/BestPortal.jpg" alt="Best Portal">
   </div>
 
-  <!-- Экран 2 -->
+  <!-- Экран 2: BestPortal.mp4 + Aliorix/Lunora/Best -->
   <div id="anim-screen" class="screen">
     <video id="anim-video" preload="auto" playsinline muted loop></video>
     <div class="bottom-bar">
-      <img id="lunora-btn" src="./static/img/Lunora.png" alt="Lunora">
-      <img id="aleorix-btn" src="./static/img/aleorix.jpg" alt="Aleorix">
-      <img id="best-btn" src="./static/img/best.jpg" alt="Best">
+      <img id="aliorix-btn" alt="Aliorix">
+      <img id="lunora-btn" alt="Lunora">
+      <img id="best-btn" alt="Best">
     </div>
   </div>
 
-  <!-- Экран 3 -->
+  <!-- Экран 3: Lunora.mp4 + Noira/Zaryum -->
   <div id="portal-screen" class="screen">
     <video id="lunora-video" preload="auto" playsinline muted loop></video>
     <div class="bottom-bar">
-      <img id="noira-btn" src="./static/img/Noira.jpg" alt="Noira">
-      <img id="zaryum-btn" src="./static/img/Zaryum.jpg" alt="Zaryum">
+      <img id="noira-btn" alt="Noira">
+      <img id="zaryum-btn" alt="Zaryum">
     </div>
   </div>
 
-  <!-- Экран 3.1 -->
+  <!-- Экран 3.1: Best.mp4 + участники -->
   <div id="team-screen" class="screen">
     <div class="team-row top-row"></div>
     <div class="team-row middle-row"></div>
@@ -46,15 +46,15 @@
     <div class="team-row bottom-row"></div>
   </div>
 
-  <!-- Экран 3.3 Aleorix -->
-  <div id="aleorix-screen" class="screen">
-    <video id="aleorix-video" preload="auto" playsinline muted loop></video>
+  <!-- Экран 3.3: Aliorix.mp4 + одна иконка Alina -->
+  <div id="aliorix-screen" class="screen">
+    <video id="aliorix-video" preload="auto" playsinline muted loop></video>
     <div class="bottom-bar">
-      <img src="./static/contacts/best/Alina.jpg" alt="Alina">
+      <img id="alina-icon" alt="Alina">
     </div>
   </div>
 
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <script src="./script.js?v=3022"></script>
+  <script src="./script.js?v=3024"></script>
 </body>
 </html>
